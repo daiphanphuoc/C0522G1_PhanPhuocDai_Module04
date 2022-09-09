@@ -19,6 +19,9 @@ public class DictionaryService implements IService {
 
     @Override
     public String findKey(String key) {
+        if(key.length()>0){
         return repository.findKey(key);
+        }
+        return null;
     }
 }

@@ -11,10 +11,10 @@
     <title>Title</title>
 </head>
 <body>
-<form>
-    <input name="key" type="text" value="${key}">
-    <input type="submit" value="search">
+<form method="post">
+    <input name="key" type="text" value="${key}"/>
+    <input type="submit" value="search"/>
 </form>
-<span><${result}</span>
+<span>${mean}</span>
 </body>
 </html>
