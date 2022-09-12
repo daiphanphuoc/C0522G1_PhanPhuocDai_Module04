@@ -5,31 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e66f24-cc4e-41bc-afd3-87b59d1c188c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../currency/src/main/java/dai_phan/exercise/service/CurrencyService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../currency/src/main/java/dai_phan/exercise/service/ICurrencyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../currency/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../currency/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../currency/src/main/java/dai_phan/exercise/controller/CurrencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency/src/main/java/dai_phan/exercise/controller/CurrencyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../currency/src/main/webapp/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../currency/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/controller/DictionaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/controller/DictionaryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/repository/DictionaryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/repository/DictionaryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/repository/IRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/service/DictionaryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/service/DictionaryService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/dai_phan/exercise/service/IService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/dictionary-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/dictionary-1.0-SNAPSHOT.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/controller/DictionaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/controller/DictionaryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/DictionaryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/DictionaryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/IRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/impl/IDictionaryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/DictionaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/DictionaryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/IService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/impl/IDictionaryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +155,8 @@
       <option name="presentableId" value="Default" />
       <updated>1662713911468</updated>
       <workItem from="1662713913085" duration="4304000" />
-      <workItem from="1662863340963" duration="1922000" />
+      <workItem from="1662863340963" duration="1936000" />
+      <workItem from="1662894083280" duration="652000" />
     </task>
     <servers />
   </component>
