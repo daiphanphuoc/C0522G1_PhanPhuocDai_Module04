@@ -1,8 +1,7 @@
 package dai_phan.practice.model;
 
 
-
-public class Customer implements Cloneable {
+public class Customer {
     private Long id;
     private String name;
     private String email;

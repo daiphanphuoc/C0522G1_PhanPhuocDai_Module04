@@ -1,7 +1,7 @@
-package dai_phan.exercise.service;
+package dai_phan.exercise.service.impl;
 
-import dai_phan.exercise.repository.impl.IDictionaryRepository;
-import dai_phan.exercise.service.impl.IDictionaryService;
+import dai_phan.exercise.repository.IDictionaryRepository;
+import dai_phan.exercise.service.IDictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

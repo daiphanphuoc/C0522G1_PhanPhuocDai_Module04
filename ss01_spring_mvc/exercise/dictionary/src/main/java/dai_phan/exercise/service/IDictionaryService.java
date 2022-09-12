@@ -1,4 +1,4 @@
-package dai_phan.exercise.service.impl;
+package dai_phan.exercise.service;
 
 import java.util.Map;
 

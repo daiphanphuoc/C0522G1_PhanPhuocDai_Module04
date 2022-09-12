@@ -1,4 +1,4 @@
-package dai_phan.exercise.repository.impl;
+package dai_phan.exercise.repository;
 
 import java.util.Map;
 

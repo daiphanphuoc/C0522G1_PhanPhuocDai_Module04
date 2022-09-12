@@ -1,6 +1,6 @@
 package dai_phan.exercise.controller;
 
-import dai_phan.exercise.service.impl.IDictionaryService;
+import dai_phan.exercise.service.IDictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

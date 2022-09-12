@@ -1,6 +1,6 @@
-package dai_phan.exercise.repository;
+package dai_phan.exercise.repository.impl;
 
-import dai_phan.exercise.repository.impl.IDictionaryRepository;
+import dai_phan.exercise.repository.IDictionaryRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

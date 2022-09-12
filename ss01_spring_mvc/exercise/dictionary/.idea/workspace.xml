@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e66f24-cc4e-41bc-afd3-87b59d1c188c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/controller/DictionaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/controller/DictionaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/DictionaryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/impl/DictionaryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/impl/IDictionaryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/repository/IDictionaryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/DictionaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/impl/DictionaryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/impl/IDictionaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dai_phan/exercise/service/IDictionaryService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +46,6 @@
   <component name="ProjectId" id="2EWah6131rch8vYDtBaN1RupCXM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -50,7 +53,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../ss02_spring_mvc_controller/practice/customer_management" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -157,6 +160,7 @@
       <workItem from="1662713913085" duration="4304000" />
       <workItem from="1662863340963" duration="1936000" />
       <workItem from="1662894083280" duration="652000" />
+      <workItem from="1662973373772" duration="106000" />
     </task>
     <servers />
   </component>

@@ -8,24 +8,24 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
+<head>
     <title>$Title$</title>
-  </head>
-  <body>
-  <h3>Sandwich Condiments</h3>
+</head>
+<body>
+<h3>Sandwich Condiments</h3>
 <form method="get" action="save">
 
-  <label for="lettuce">lettuce</label><input id="lettuce" type="checkbox" value="lettuce" name="condiments"/>
-  <label for="tomato">tomato</label><input id="tomato" type="checkbox" value="tomato" name="condiments">
-  <label for="mustard">mustard</label><input id="mustard" type="checkbox" value="mustard" name="condiments">
-  <label for="sprouts">sprouts</label><input id="sprouts" type="checkbox" value="sprouts" name="condiments">
- <input type="submit" value="save">
+    <label for="lettuce">lettuce</label><input id="lettuce" type="checkbox" value="lettuce" name="condiments"/>
+    <label for="tomato">tomato</label><input id="tomato" type="checkbox" value="tomato" name="condiments">
+    <label for="mustard">mustard</label><input id="mustard" type="checkbox" value="mustard" name="condiments">
+    <label for="sprouts">sprouts</label><input id="sprouts" type="checkbox" value="sprouts" name="condiments">
+    <input type="submit" value="save">
 </form>
 
-  <h3>Sandwich Condiments</h3>
-  <c:forEach var="item" items="${condiments}">
+<h3>Sandwich Condiments</h3>
+<c:forEach var="item" items="${condiments}">
     <p>${item}</p>
-  </c:forEach>
+</c:forEach>
 
-  </body>
+</body>
 </html>

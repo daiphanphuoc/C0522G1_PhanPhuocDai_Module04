@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CalculatorController {
     @Autowired
-    ICalculatorService calculatorService;
+    private ICalculatorService calculatorService;
 
     @RequestMapping("/")
     public String showCalculator() {
@@ -18,31 +18,11 @@ public class CalculatorController {
     }
 
     @RequestMapping("/calculator")
-    public String showResult(@RequestParam double first, @RequestParam double second,
-                             @RequestParam String calculator,Model model) {
-        double result =0;
-        switch (calculator){
-            case "addition":
-                result=calculatorService.addition(first,second);
-                break;
-            case "subtraction":
-                result=calculatorService.subtraction(first,second);
-                break;
-            case "multiplication":
-                result=calculatorService.multiplication(first,second);
-                break;
-            case "division":
-                if (second!=0) {
-                    result=calculatorService.division(first, second);
-                }else{
-                    model.addAttribute("result","vui lòng nhập số chia khác 0");
-                    return "index";
-                }
-                break;
-            default:model.addAttribute("result","vui lòng nhập số, phép tính");
-                return "index";
-        }
-        model.addAttribute("result",result);
+    public String showResult(@RequestParam String first, @RequestParam String second,
+                             @RequestParam String calculator, Model model) {
+        String result = calculatorService.calculate(first,second,calculator);
+
+        model.addAttribute("result", result);
         return "index";
     }
 }
