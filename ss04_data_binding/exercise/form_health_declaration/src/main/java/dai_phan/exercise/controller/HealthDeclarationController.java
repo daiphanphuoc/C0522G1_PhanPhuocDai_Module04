@@ -32,6 +32,15 @@ public class HealthDeclarationController {
         modelAndView.addObject("travelInfo", healthDeclarationService.travelInfo());
         return modelAndView;
     }
+    @GetMapping("/create")
+    public ModelAndView showFormCreate() {
+        ModelAndView modelAndView = new ModelAndView("/create");
+        HealthDeclaration healthDeclaration = new HealthDeclaration();
+        modelAndView.addObject("info", healthDeclaration);
+        modelAndView.addObject("countryList", healthDeclarationService.countryList());
+        modelAndView.addObject("travelInfo", healthDeclarationService.travelInfo());
+        return modelAndView;
+    }
 
     @PostMapping("/update")
     public String saveUpdate(@ModelAttribute HealthDeclaration health, RedirectAttributes attributes) {
@@ -40,6 +49,17 @@ public class HealthDeclarationController {
             attributes.addFlashAttribute("message", "Cập nhật thành công" + health.getName());
         } else {
             attributes.addFlashAttribute("message", "Cập nhật thất bại" + health.getName());
+        }
+        return "redirect:/health";
+    }
+
+    @PostMapping("/insert")
+    public String insert(@ModelAttribute HealthDeclaration health, RedirectAttributes attributes) {
+        HealthDeclaration healthDeclaration = healthDeclarationService.insert(health);
+        if (healthDeclaration != null) {
+            attributes.addFlashAttribute("message", "Thêm mới thành công" + health.getName());
+        } else {
+            attributes.addFlashAttribute("message", "Thêm mới thất bại" + health.getName());
         }
         return "redirect:/health";
     }

@@ -16,6 +16,7 @@
 
 </head>
 <body>
+<a href="/create"><button>Thêm mới</button></a>
 <h1> Thông tin khai báo</h1>
 <h3 style="color: blue">${message}</h3>
 <table class="table">

@@ -13,6 +13,11 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        span{
+            color: red;
+        }
+    </style>
 
 </head>
 <body>
@@ -27,15 +32,15 @@
             <td><form:hidden path="id"/></td>
         </tr>
         <tr>
-            <td>Họ tên (ghi chữ in hoa)(*)</td>
+            <td>Họ tên (ghi chữ in hoa)<span>(*)</span></td>
         </tr>
         <tr>
             <td><form:input path="name"/></td>
         </tr>
         <tr>
-            <td>Năm sinh (*)</td>
-            <td>Giới tính (*)</td>
-            <td>Quốc tịch (*)</td>
+            <td>Năm sinh <span>(*)</span></td>
+            <td>Giới tính <span>(*)</span></td>
+            <td>Quốc tịch <span>(*)</span></td>
         </tr>
         <tr>
             <td><form:input path="dayOfBirth"/></td>
@@ -44,7 +49,7 @@
             <td><form:select path="country" items="${countryList}"/></td>
         </tr>
         <tr>
-            <td>Số hộ chiếu/ số CMND hoặc giấy tờ khác (*)</td>
+            <td>Số hộ chiếu/ số CMND hoặc giấy tờ khác <span>(*)</span></td>
         </tr>
         <tr>
             <td><form:input path="idCard"/></td>
@@ -56,23 +61,23 @@
             <td><form:radiobuttons path="travelInformation" items="${travelInfo}"/></td>
         </tr>
         <tr>
-            <td>Số hiệu phương tiên (*)</td>
-            <td>Số ghế (*)</td>
+            <td>Số hiệu phương tiên <span>(*)</span></td>
+            <td>Số ghế <span>(*)</span></td>
         </tr>
         <tr>
             <td><form:input path="license"/></td>
             <td><form:input path="numberOfSeat"/></td>
         </tr>
         <tr>
-            <td>Ngày khởi hành (*)</td>
-            <td>Ngày kết thúc (*)</td>
+            <td>Ngày khởi hành <span>(*)</span></td>
+            <td>Ngày kết thúc <span>(*)</span></td>
         </tr>
         <tr>
             <td><form:input path="startDay"/></td>
             <td><form:input path="endDay"/></td>
         </tr>
         <tr>
-            <td>Trong vòng 14 ngày qua, Anh/Chị có đến tỉnh/ thành phố nào? (*)</td>
+            <td>Trong vòng 14 ngày qua, Anh/Chị có đến tỉnh/ thành phố nào?<span>(*)</span></td>
         </tr>
         <tr>
             <td><form:textarea path="travelHistory"/></td>

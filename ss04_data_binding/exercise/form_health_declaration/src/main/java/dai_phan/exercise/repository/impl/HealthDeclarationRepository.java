@@ -57,7 +57,8 @@ public class HealthDeclarationRepository implements IHealthDeclarationRepository
     @Override
     public HealthDeclaration insert(HealthDeclaration healthDeclaration) {
         if (healthDeclarationMap.get(healthDeclaration.getId()) == null) {
-            return healthDeclarationMap.put(healthDeclaration.getId(), healthDeclaration);
+           healthDeclarationMap.put(healthDeclaration.getId(), healthDeclaration);
+            return healthDeclaration;
         }
         return null;
     }
