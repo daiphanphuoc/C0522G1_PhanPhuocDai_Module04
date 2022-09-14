@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+</head>
+<body>
+<h3>Product List</h3>
+<p>
+    <a th:href="@{/product/create}">
+        Add new product
+    </a>
+</p>
+<form action="/product/search" method="get">
+    <input type="text" id="search" name = "search" placeholder="nhập tên sản phẩm"/>
+    <input type="submit" value="Search">
+</form>
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<table id = "products">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>price</th>
+        <th>describe</th>
+        <th>producer</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${products}">
+        <td th:text="${rowStat.count}"></td>
+        <td th:text="${row.name}"></td>
+        <td th:text="${row.price}"></td>
+        <td th:text="${row.describe}"></td>
+        <td th:text="${row.producer}"></td>
+        <td><a th:href="@{/product/{id}/update(id=${row.id})}">edit</a></td>
+        <td>
+            <a th:href="@{/product/{id}/delete(id=${row.id})}">delete</a>
+          <!--  <a data-bs-toggle="modal" data-bs-target="#deleteModal"
+               onclick="deleteProduct()">delete</a>-->
+        </td>
+        <td><a th:href="@{/product/{id}/detail(id=${row.id})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<!--<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/product/delete/" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">You Want To Delete?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden name="id" id="id">
+&lt;!&ndash;                    <input type="text" hidden name="action" value="delete">&ndash;&gt;
+                    <strong>Customer: </strong>
+                    <span id="nameDelete"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>-->
+<footer th:replace="/layout :: footer"></footer>
+</body>
+<script>
+    function deleteProduct(id, name) {
+        document.getElementById("id").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
+</html>

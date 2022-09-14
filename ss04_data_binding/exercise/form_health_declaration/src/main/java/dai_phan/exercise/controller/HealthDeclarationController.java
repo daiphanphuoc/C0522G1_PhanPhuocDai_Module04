@@ -32,7 +32,7 @@ public class HealthDeclarationController {
         modelAndView.addObject("travelInfo", healthDeclarationService.travelInfo());
         return modelAndView;
     }
-    
+
     @GetMapping("/create")
     public ModelAndView showFormCreate() {
         ModelAndView modelAndView = new ModelAndView("/create");
