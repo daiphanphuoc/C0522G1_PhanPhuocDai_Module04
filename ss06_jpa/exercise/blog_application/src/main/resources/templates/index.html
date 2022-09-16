@@ -3,14 +3,14 @@
 <head th:replace="/layout :: head">
 </head>
 <body>
-<h3>Product List</h3>
+<h3>Blog List</h3>
 <p>
-    <a th:href="@{/product/create}">
-        Add new product
+    <a th:href="@{/blog/create}">
+        Add new blog
     </a>
 </p>
 <form action="/blog/search" method="get">
-    <input type="text" id="search" name = "search" placeholder="nhập tên tiêu đề blog"/>
+    <input type="text" id="search" name="search" placeholder="nhập tên tiêu đề blog"/>
     <input type="submit" value="Search">
 </form>
 <div class="notify">
@@ -18,7 +18,7 @@
         <h3 th:text="${success}"></h3>
     </div>
 </div>
-<table id = "products">
+<table id="products">
     <thead>
     <tr>
         <th>STT</th>
@@ -39,9 +39,6 @@
         <td><a th:href="@{/blog/{id}/update(id=${row.id})}">edit</a></td>
         <td>
             <a th:href="@{/blog/{id}/delete(id=${row.id})}">delete</a>
-           <!-- <a data-bs-toggle="modal" data-bs-target="#deleteModal"
-            &lt;!&ndash;th:onclick="deleteProduct([[${row.id}]],[[${row.name}]])"&ndash;&gt;
-            >delete2</a>-->
         </td>
         <td><a th:href="@{/blog/{id}/detail(id=${row.id})}">view</a></td>
     </tr>

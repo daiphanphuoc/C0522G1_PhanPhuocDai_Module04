@@ -9,14 +9,13 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
-public interface IBlogRepository extends JpaRepository<Blog,Integer> {
+public interface IBlogRepository extends JpaRepository<Blog, Integer> {
 
 
-    @Query(value = "select * from Blog  b where is_delete =0 and title like %:key%;",nativeQuery = true)
+    @Query(value = "select * from Blog  b where is_delete = 0 and title like %:key%;", nativeQuery = true)
     List<Blog> searchByTitle(@Param("key") String title);
 
-    @Modifying
-    @Query(value = " update Blog set is_delete = 1 where  is_delete =0 and id = :i;",nativeQuery = true)
+
+    @Query(value = " update Blog set is_delete = 1 where  is_delete = 0 and id = :i;", nativeQuery = true)
     int deleteLogic(@Param("i") int id);
 }

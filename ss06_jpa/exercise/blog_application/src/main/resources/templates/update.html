@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
-<h3>Update Product</h3>
+<h3>Update Blog</h3>
 <p>
     <a th:href="@{/blog}">
-        Back to customer list
+        Back to home
     </a>
 </p>
 <div id="form">
@@ -22,11 +22,13 @@
         </div>
         <div>
             <label>Nội dung</label>
-            <input  th:field="*{content}"/>
+            <label>
+                <textarea th:field="*{content}"></textarea>
+            </label>
         </div>
         <div>
             <label>Ngày tạo</label>
-            <input  th:field="*{dateOfWriting}"/>
+            <input type="date" th:field="*{dateOfWriting}"/>
         </div>
         <input type="submit" value="Save"/>
     </form>

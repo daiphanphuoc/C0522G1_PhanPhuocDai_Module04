@@ -10,7 +10,7 @@ public interface IBlogService {
 
     List<Blog> searchByTitle(String title);
 
-    Blog findById( int id);
+    Blog findById(int id);
 
     Blog insert(Blog blog);
 

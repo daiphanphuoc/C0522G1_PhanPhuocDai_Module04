@@ -16,6 +16,7 @@ public class BlogService implements IBlogService {
 
     @Autowired
     private IBlogRepository repository;
+
     @Override
     public List<Blog> findAll() {
         return repository.findAll();

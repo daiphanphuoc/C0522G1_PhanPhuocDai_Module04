@@ -16,8 +16,8 @@ public class BlogController {
     private IBlogService blogService;
 
     @RequestMapping("")
-    public String showList(Model model){
-        model.addAttribute("blogList",blogService.findAll() );
+    public String showList(Model model) {
+        model.addAttribute("blogList", blogService.findAll());
         return "index";
     }
 
@@ -55,7 +55,7 @@ public class BlogController {
     public String insert(Blog blog, RedirectAttributes redirectAttributes) {
         //product.setId((int) (Math.random() * 10000));
         Blog p = blogService.insert(blog);
-        if(p!=null) {
+        if (p != null) {
             redirectAttributes.addFlashAttribute("success", "Thêm mới thành công");
         }
         return "redirect:/blog";
