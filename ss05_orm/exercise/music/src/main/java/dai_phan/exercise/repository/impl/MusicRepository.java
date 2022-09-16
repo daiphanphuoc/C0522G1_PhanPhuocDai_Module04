@@ -30,8 +30,8 @@ public class MusicRepository implements IMusicRepository {
         List<Music> musicList = null;
 
         try (Session session = ConnectionUtil.sessionFactory.openSession()) {
-            Query query = session.createQuery("from Music p where p.name like :param");
-            query.setParameter("param", "%" + name + "%");
+            Query query = session.createQuery("from Music p where p.name like ?1");
+            query.setParameter(1, "%" + name + "%");
             musicList = query.getResultList();
         }
         return musicList;
