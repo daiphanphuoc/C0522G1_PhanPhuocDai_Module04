@@ -15,11 +15,11 @@ public class BlogController {
     @Autowired
     private IBlogService blogService;
 
-    @RequestMapping("")
+/*    @RequestMapping("")
     public String showList(Model model) {
         model.addAttribute("blogList", blogService.findAll());
         return "index";
-    }
+    }*/
 
     @GetMapping("/create")
     public String showFormCreate(Model model) {
@@ -27,8 +27,8 @@ public class BlogController {
         return "create";
     }
 
-    @GetMapping("/search")
-    public String searchByName(@RequestParam String search, Model model) {
+    @GetMapping("")
+    public String searchByName(@RequestParam(defaultValue = "") String search, Model model) {
         model.addAttribute("blogList", blogService.searchByTitle(search));
         return "index";
     }

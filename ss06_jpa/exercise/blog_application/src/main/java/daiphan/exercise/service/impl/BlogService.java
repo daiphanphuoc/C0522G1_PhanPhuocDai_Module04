@@ -4,13 +4,11 @@ import daiphan.exercise.model.Blog;
 import daiphan.exercise.repository.IBlogRepository;
 import daiphan.exercise.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
+
 @Service
 public class BlogService implements IBlogService {
 
@@ -43,7 +41,6 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    @Modifying
     public int delete(int id) {
         return repository.deleteLogic(id);
     }

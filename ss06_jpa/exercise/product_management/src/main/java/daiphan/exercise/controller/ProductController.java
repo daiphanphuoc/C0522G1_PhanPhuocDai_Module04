@@ -15,20 +15,20 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @RequestMapping("")
+   /* @RequestMapping("")
     public String listProduct(Model model) {
         model.addAttribute("products", productService.productAll());
         return "index";
     }
-
+*/
     @GetMapping("/create")
     public String showFormCreate(Model model) {
         model.addAttribute("product", new Product());
         return "create";
     }
 
-    @GetMapping("/search")
-    public String searchByName(@RequestParam String search, Model model) {
+    @GetMapping("")
+    public String searchByName(@RequestParam(defaultValue = "") String search, Model model) {
         model.addAttribute("products", productService.searchByName(search));
         return "index";
     }
