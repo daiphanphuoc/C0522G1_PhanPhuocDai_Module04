@@ -3,12 +3,9 @@
 <head th:replace="/layout :: head">
 </head>
 <body>
+<div th:replace="/layout::navbar"></div>
 <h3>Blog List</h3>
-<p>
-    <a th:href="@{/blog/create}">
-        Add new blog
-    </a>
-</p>
+
 <form action="/blog" method="get">
     <input type="text" id="search" name="search" placeholder="nhập tên tiêu đề blog"/>
     <input type="submit" value="Search">
@@ -35,7 +32,7 @@
     <tr th:each="row,rowStat : ${blogList}">
         <td th:text="${rowStat.count}"></td>
         <td th:if="${row.category}" th:text="${row.category.nameCategory}"></td>
-        <td th:unless="${row.category}" ></td>
+        <td th:unless="${row.category}"></td>
         <td th:text="${row.title}"></td>
         <td th:text="${row.author}"></td>
         <td th:text="${row.dateOfWriting}"></td>

@@ -1,8 +1,6 @@
 package daiphan.exercise.controller;
 
-import daiphan.exercise.model.Blog;
 import daiphan.exercise.model.Category;
-import daiphan.exercise.service.IBlogService;
 import daiphan.exercise.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +37,7 @@ public class CategoryController {
     public String searchByName(@RequestParam(defaultValue = "") String search, Model model,
                                @PageableDefault(value = 3) Pageable pageable) {
         model.addAttribute("categoryList", categoryService.searchByName(search, pageable));
-        model.addAttribute("search",search);
+        model.addAttribute("search", search);
         return "category/index";
     }
 

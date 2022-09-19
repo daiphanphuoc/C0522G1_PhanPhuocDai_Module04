@@ -2,12 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
+<div th:replace="/layout::navbar"></div>
 <h3>Add new</h3>
-<p>
-    <a th:href="@{/blog}">
-        Back to home
-    </a>
-</p>
+
 <div id="form">
     <form th:action="@{/blog/save}" th:object="${blog}"
           method="POST" novalidate="novalidate">
@@ -26,8 +23,9 @@
         </div>
         <div>
             <label>Danh mục</label>
-            <select th:field = "*{category}">
-                <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.nameCategory}">
+            <select th:field="*{category}">
+                <option th:each="category : ${categoryList}" th:value="${category.id}"
+                        th:text="${category.nameCategory}">
                 </option>
             </select>
 

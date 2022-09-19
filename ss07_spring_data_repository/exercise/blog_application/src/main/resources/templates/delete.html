@@ -2,12 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
+<div th:replace="/layout::navbar"></div>
 <h3>Delete blog</h3>
-<p>
-    <a th:href="@{/blog}">
-        Back to Home
-    </a>
-</p>
+
 <div id="form">
     <form th:action="@{/blog/delete}" th:object="${blog}"
           method="POST" novalidate="novalidate">
@@ -31,7 +28,7 @@
 
         <div>
             <label>Danh mục</label>
-            <input th:field = "*{category}" th:value="*{category.id}" th:text="*{category.nameCategory}"/>
+            <input th:field="*{category}" th:value="*{category.id}" th:text="*{category.nameCategory}"/>
 
         </div>
         <input type="submit" value="Delete"/>

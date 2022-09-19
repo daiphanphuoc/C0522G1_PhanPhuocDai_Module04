@@ -2,12 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
+<div th:replace="/layout::navbar"></div>
 <h3>Delete category</h3>
-<p>
-    <a th:href="@{/category}">
-        Back to Home
-    </a>
-</p>
+
 <div id="form">
     <form th:action="@{/category/delete}" th:object="${category}"
           method="POST" novalidate="novalidate">

@@ -1,6 +1,5 @@
 package daiphan.exercise.service.impl;
 
-import daiphan.exercise.model.Blog;
 import daiphan.exercise.model.Category;
 import daiphan.exercise.repository.ICategoryRepository;
 import daiphan.exercise.service.ICategoryService;
@@ -49,6 +48,6 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Page<Category> searchByName(String search, Pageable pageable) {
-        return categoryRepository.searchByName(search,pageable);
+        return categoryRepository.searchByName(search, pageable);
     }
 }

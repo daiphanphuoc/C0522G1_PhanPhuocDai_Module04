@@ -1,11 +1,11 @@
 package daiphan.exercise.controller;
 
 import daiphan.exercise.model.Blog;
-import daiphan.exercise.repository.ICategoryRepository;
 import daiphan.exercise.service.IBlogService;
 import daiphan.exercise.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +37,9 @@ public class BlogController {
 
     @GetMapping("")
     public String searchByName(@RequestParam(defaultValue = "") String search, Model model,
-                               @PageableDefault(value = 3)Pageable pageable) {
-        model.addAttribute("blogList", blogService.searchByTitle(search,pageable));
+                               @PageableDefault(value = 3, sort = "date_of_writing",
+                                       direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("blogList", blogService.searchByTitle(search, pageable));
         model.addAttribute("search", search);
         return "index";
     }

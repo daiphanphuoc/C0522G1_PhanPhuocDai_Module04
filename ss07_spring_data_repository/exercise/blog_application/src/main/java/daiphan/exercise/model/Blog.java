@@ -1,6 +1,5 @@
 package daiphan.exercise.model;
 
-import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -21,7 +20,7 @@ public class Blog {
     private boolean isDelete;
 
     @ManyToOne
-    @JoinColumn(name = "category_id" ,referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     public Category getCategory() {

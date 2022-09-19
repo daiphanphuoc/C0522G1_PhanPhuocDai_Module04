@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
+<div th:replace="/layout::navbar"></div>
 <h3 th:text="${category.nameCategory}"></h3>
 <p>
     <a th:href="@{/category}">
@@ -9,7 +10,6 @@
     </a>
 </p>
 <div>
-
 
 
 </div>
