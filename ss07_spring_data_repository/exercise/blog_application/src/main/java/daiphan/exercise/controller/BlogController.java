@@ -32,7 +32,7 @@ public class BlogController {
     public String showFormCreate(Model model) {
         model.addAttribute("blog", new Blog());
         model.addAttribute("categoryList", categoryService.findAll());
-        return "create";
+        return "blog/create";
     }
 
     @GetMapping("")
@@ -41,26 +41,26 @@ public class BlogController {
                                        direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("blogList", blogService.searchByTitle(search, pageable));
         model.addAttribute("search", search);
-        return "index";
+        return "blog/index";
     }
 
     @GetMapping("/{id}/update")
     public String showFormUpdate(@PathVariable int id, Model model) {
         model.addAttribute("blog", blogService.findById(id));
         model.addAttribute("categoryList", categoryService.findAll());
-        return "update";
+        return "blog/update";
     }
 
     @GetMapping("/{id}/detail")
     public String showFormDetail(@PathVariable int id, Model model) {
         model.addAttribute("blog", blogService.findById(id));
-        return "detail";
+        return "blog/detail";
     }
 
     @GetMapping("/{id}/delete")
     public String showFormDelete(@PathVariable int id, Model model) {
         model.addAttribute("blog", blogService.findById(id));
-        return "delete";
+        return "blog/delete";
     }
 
     @PostMapping("/save")
