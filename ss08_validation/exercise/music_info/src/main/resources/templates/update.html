@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:charset="UTF-8">
+<head th:replace="/temp::head">
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+</head>
+<body>
+<div class="row" th:replace="/temp :: navBar"></div>
+<br><br>
+
+<h1 style="color: #0c63e4;text-align: center;font-size: 40px"> Cập nhật bài hát</h1>
+<form th:object="${musicDto}" th:action="@{/music/update}" method="post"
+      style="margin-left:30%;width: 40%;margin-top: 5%">
+  <table class="table table-striped">
+    <tr>
+      <td><input hidden type="text" th:field="*{id}"></td>
+    </tr>
+    <tr>
+      <td>Tên bài hát:</td>
+      <td><input type="text" th:field="*{musicName}"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><p style="color: crimson" th:errors="*{musicName}"
+             th:if="${#fields.hasErrors('musicName')}"></p></td>
+    </tr>
+    <tr>
+      <td>Tên ca sỹ:</td>
+      <td><input type="text" th:field="*{singerName}"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><p style="color: crimson" th:errors="*{singerName}"
+             th:if="${#fields.hasErrors('singerName')}"></p></td>
+    </tr>
+    <tr>
+      <td>Thể loại:</td>
+      <td><input type="text" th:field="*{kindOfMusic}"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><p style="color: crimson" th:errors="*{kindOfMusic}"
+             th:if="${#fields.hasErrors('kindOfMusic')}"></p></td>
+    </tr>
+  </table>
+  <button type="submit">Save</button>
+</form>
+<div th:replace="/temp::footer"></div>
+</body>
+</html>

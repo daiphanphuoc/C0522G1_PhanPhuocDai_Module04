@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:charset="UTF-8">
+<head th:replace="/temp :: head">
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+
+</head>
+<body>
+
+<div class="row container-fluid">
+    <div class="row" th:replace="/temp :: navBar"></div>
+    <div class="row">
+        <h1>Music Management</h1>
+    </div>
+
+    <div class="row" th:if="${message}">
+        <h4 th:text="${message}" style="color: red"></h4>
+    </div>
+    <br>
+
+    <div>
+        <table class="table table-striped" style="margin-top: 50px">
+            <tr>
+                <th>STT</th>
+                <th>Tên bài hát</th>
+                <th>Tên ca sỹ</th>
+                <th>Thể loại</th>
+                <th>Cập nhập</th>
+
+            </tr>
+            <tr th:each="music,status : ${musicList}">
+                <td th:text="${musicList.number * 2 + status.count}"></td>
+                <td  th:text="${music.musicName}"></td>
+                <td  th:text="${music.singerName}"></td>
+                <td th:text="${music.kindOfMusic}"></td>
+                <td><a th:href="@{/music/update/__${music.id}__}">
+                    <button class="btn btn-primary"><span class="bi bi-pencil-square"></span></button>
+                </a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="text-align: center">
+        <a th:href="@{'/music'(page=${musicList.number - 1}, search=${search})}" th:if="${musicList.hasPrevious()}">Previous</a>
+        <span th:text="${musicList.number + 1}"></span> / <span th:text="${musicList.totalPages}"></span>
+        <a th:href="@{'/music'(page=${musicList.number + 1}, search=${search})}" th:if="${musicList.hasNext()}">Next</a>
+    </div>
+</div>
+<div th:replace="/temp::footer"></div>
+</body>
+</html>
+
