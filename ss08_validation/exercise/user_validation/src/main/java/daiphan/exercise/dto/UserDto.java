@@ -22,12 +22,10 @@ public class UserDto {
     private String phoneNumber;
 
     @NotBlank(message = "Email không được để trống.")
-    @Pattern(regexp = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]{2,}(\\.[A-Za-z0-9]{2,}){1,2}$",
-            message = "Email phải đúng định dạng.")
+    @Email(message = "Email phải đúng định dạng.")
     private String email;
 
     @Min(18)
-    @Max(80)
     private int age;
 
     public UserDto() {
