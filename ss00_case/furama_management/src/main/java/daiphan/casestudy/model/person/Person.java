@@ -1,7 +1,13 @@
 package daiphan.casestudy.model.person;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
+@MappedSuperclass
+@EntityListeners({AuditingEntityListener.class})
 public abstract class Person {
     private String name;
     private String idCitizen;

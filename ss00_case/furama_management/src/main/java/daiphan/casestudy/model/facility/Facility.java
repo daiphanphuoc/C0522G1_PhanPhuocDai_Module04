@@ -9,6 +9,7 @@ public abstract class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private double leasedArea;
     private double rentalCosts;
@@ -21,6 +22,7 @@ public abstract class Facility {
     @ManyToOne
     @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
     private FacilityType facilityType;
+
     private String description;
 
     public Facility() {

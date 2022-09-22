@@ -1,9 +1,11 @@
 package daiphan.casestudy.model.facility;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
+@Table(name = "facility")
 public class Villa extends Facility {
     private String room;
     private int floor;
