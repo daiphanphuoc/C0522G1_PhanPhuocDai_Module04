@@ -11,7 +11,7 @@ public class BookAspect {
     private static int count =0;
     private static int update =0;
 
-    @Pointcut("execution(* daiphan.exercise.controller.BookController.showList(..))")
+    @Pointcut("execution(* daiphan.exercise.controller.BookController.*(..))")
     public void callPointCutMethod(){
 
     }
@@ -28,7 +28,7 @@ public class BookAspect {
     @AfterReturning("callPointCutMethod()")
     public void afterCall(){
         count++;
-        System.out.println("times show list =" + count);
+        System.out.println("times visit book =" + count);
     }
 
     @AfterReturning("callPointCutUpdate()")
