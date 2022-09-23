@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,24 +31,26 @@ public class CartController {
     }
 
     @GetMapping("/reduce/{id}")
-    public String reduceToCart(@PathVariable int id, @SessionAttribute("cart") CartDto cart) {
+    public String reduceToCart(@PathVariable int id, @SessionAttribute("cart") CartDto cart, Model model) {
         Optional<Product> productOptional = productService.findById(id);
         if (productOptional.isPresent()) {
             ProductDto product =new ProductDto();
             BeanUtils.copyProperties(productOptional.get(),product);
             cart.reduceProduct(product);
         }
+        model.addAttribute("cart",cart);
         return "cart/cart";
     }
 
     @GetMapping("/add/{id}")
-    public String addToCart(@PathVariable int id, @SessionAttribute("cart") CartDto cart) {
+    public String addToCart(@PathVariable int id, @SessionAttribute("cart") CartDto cart,Model model) {
         Optional<Product> productOptional = productService.findById(id);
         if (productOptional.isPresent()) {
             ProductDto product =new ProductDto();
             BeanUtils.copyProperties(productOptional.get(),product);
             cart.addProduct(product);
         }
+        model.addAttribute("cart",cart);
         return "cart/cart";
     }
 }
