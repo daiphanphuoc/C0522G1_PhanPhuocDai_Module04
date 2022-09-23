@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout::head">
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="/layout::navbar"></div>
+    </div>
+    <div class="row ">
+        <div class="col-3"><p>   </p></div>
+        <div class="col-6">
+            <h3 style="font-family: Comic Sans MS, Lucida Sans Unicode, sans-serif;">Giỏ hàng của bạn</h3>
+            <p style="transform: translateX(10px)">
+                <a th:href="@{/shop}">
+                    <button class="btn btn-info">
+                        Về danh sách sản phẩm
+                    </button>
+                </a>
+            </p>
+            <div class="row">
+                <table class="table" th:if="${cart !=null && cart.products.size()>0}">
+                    <thead>
+                    <tr style="background-color: aquamarine">
+                        <th>Tên sản phẩm</th>
+                        <th>Ảnh</th>
+                        <th>Giá tiền</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                        <th>Thêm</th>
+                        <th>Giảm</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product:${cart.products}">
+                        <td th:text="${product.key.name}"></td>
+                        <td>
+                            <img th:src="@{${product.key.image}}" style="width:70px; height: auto">
+                        </td>
+                        <td th:text="${product.key.price}">2</td>
+                        <td th:text="${product.value}">1</td>
+                        <td th:text="${product.key.price * product.value}"></td>
+
+                        <td style="text-align: center"><a th:href="@{/card/add/__${product.key.id}__}"><i
+                                class="fa-solid fa-cart-plus"></i></a>
+                        </td>
+                        <td style="text-align: center"><a th:href="@{/card/reduce/__${product.key.id}__}"><i
+                                class="fa-sharp fa-solid fa-cart-shopping"></i></a></td>
+
+                    </tr>
+                    <hr style="border: black">
+                    <tr>
+                        <td><b>Tổng giá tiền</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td th:text="${cart.countTotalPayment()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-warning" role="alert" th:if="${cart == null || cart.products.size()==0}">
+                Bạn chưa thêm gì vào giỏ hàng.
+            </div>
+
+        </div>
+        <div class="col-3"></div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
