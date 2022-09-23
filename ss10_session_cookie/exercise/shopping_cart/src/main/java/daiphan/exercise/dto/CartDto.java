@@ -1,7 +1,5 @@
 package daiphan.exercise.dto;
 
-import daiphan.exercise.model.Product;
-
 import java.util.HashMap;
 import java.util.Map;
 

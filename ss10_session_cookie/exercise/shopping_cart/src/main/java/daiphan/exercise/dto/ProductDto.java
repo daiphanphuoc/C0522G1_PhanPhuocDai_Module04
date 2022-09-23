@@ -54,7 +54,7 @@ public class ProductDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDto productDto = (ProductDto) o;
-        return id == productDto.id ;
+        return id == productDto.id;
     }
 
     @Override
