@@ -25,7 +25,7 @@ public class BookAspect {
         System.out.println("Started method time "+ new Date());
     }
 
-    @AfterReturning("callPointCutMethod()")
+    @After("callPointCutMethod()")
     public void afterCall(){
         count++;
         System.out.println("times visit book =" + count);
