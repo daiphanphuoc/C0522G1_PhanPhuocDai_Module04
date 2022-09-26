@@ -1,6 +1,7 @@
 package daiphan.exercise.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import daiphan.exercise.dto.BlogDto;
 import org.springframework.format.annotation.DateTimeFormat;
 
