@@ -3,13 +3,13 @@ package daiphan.casestudy.model.facility;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "facility")
 @Inheritance
 public abstract class Facility {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
     private double leasedArea;
     private double rentalCosts;
@@ -24,6 +24,7 @@ public abstract class Facility {
     private FacilityType facilityType;
 
     private String description;
+
 
     public Facility() {
     }
@@ -49,6 +50,15 @@ public abstract class Facility {
         this.facilityType = facilityType;
         this.description = description;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public abstract String getInfo();
 

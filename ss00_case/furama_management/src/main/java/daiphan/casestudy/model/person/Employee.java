@@ -1,9 +1,13 @@
 package daiphan.casestudy.model.person;
 
+import daiphan.casestudy.model.business.Contract;
+import daiphan.casestudy.model.permission.User;
+
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Employee extends Person {
@@ -24,7 +28,14 @@ public class Employee extends Person {
     @JoinColumn(name = "division_id" , referencedColumnName = "id")
     private Division division;
     private double salary;
-    private String userName;
+
+
+    @OneToMany(mappedBy = "employee")
+    private Set<Contract> contracts;
+
+    @OneToOne
+    @JoinColumn(name = "user_name", referencedColumnName = "name")
+    private User user;
 
     public Employee() {
     }
@@ -44,29 +55,53 @@ public class Employee extends Person {
         String dateString  = df.format(date);
         return String.format("%s@@%s@@%s@@%s@@%s@@%s@@%s@@%s@@%s@@%s@@%s@@%s@@%s", getName(), getIdCitizen(),dateString,
                 isSex(), getPhone(), getEmail(), getAddress(), id, degree.getName(),
-                position.getName(),division.getName(), salary, userName);
+                position.getName(),division.getName(), salary, user.getName());
     }
 
     public Employee(String name, String iDCitizen, Date birthday, boolean sex,
                     String phone, String email, String address, int iDEmployee,
                     EducationDegree degree, Position position, Division division,
-                    double salary, String userName) {
+                    double salary, User userName) {
         super(name, iDCitizen, birthday, sex, phone, email, address);
         this.id = iDEmployee;
         this.degree = degree;
         this.position = position;
         this.division = division;
         this.salary = salary;
-        this.userName = userName;
+        this.user = userName;
     }
 
-    public Employee(String name, String iDCitizen, Date birthday, boolean sex, String phone, String email, String address, EducationDegree degree, Position position, Division division, double salary, String userName) {
+    public Employee(String name, String iDCitizen, Date birthday, boolean sex, String phone,
+                    String email, String address, EducationDegree degree, Position position,
+                    Division division, double salary, User userName) {
         super(name, iDCitizen, birthday, sex, phone, email, address);
         this.degree = degree;
         this.position = position;
         this.division = division;
         this.salary = salary;
-        this.userName = userName;
+        this.user = userName;
+    }
+
+    public Employee(String name, String iDCitizen, Date birthday, boolean sex, String phone,
+                    String email, String address, int id, EducationDegree degree,
+                    Position position, Division division, double salary, User userName,
+                    Set<Contract> contracts) {
+        super(name, iDCitizen, birthday, sex, phone, email, address);
+        this.id = id;
+        this.degree = degree;
+        this.position = position;
+        this.division = division;
+        this.salary = salary;
+        this.user = userName;
+        this.contracts = contracts;
+    }
+
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<Contract> contracts) {
+        this.contracts = contracts;
     }
 
     public EducationDegree getDegree() {
@@ -109,11 +144,17 @@ public class Employee extends Person {
         this.division = division;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public Employee(String name, String iDCitizen, Date birthday, boolean sex, String phone,
+                    String email, String address, int id, EducationDegree degree,
+                    Position position, Division division, double salary, Set<Contract> contracts,
+                    User user) {
+        super(name, iDCitizen, birthday, sex, phone, email, address);
+        this.id = id;
+        this.degree = degree;
+        this.position = position;
+        this.division = division;
+        this.salary = salary;
+        this.contracts = contracts;
+        this.user = user;
     }
 }

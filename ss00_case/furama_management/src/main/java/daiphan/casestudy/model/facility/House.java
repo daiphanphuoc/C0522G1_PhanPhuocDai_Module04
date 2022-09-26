@@ -1,14 +1,19 @@
 package daiphan.casestudy.model.facility;
 
+import daiphan.casestudy.model.business.Contract;
+
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "facility")
 public class House extends Facility {
     private String room;
     private int floor;
+
+    @OneToMany(mappedBy = "facility")
+    private Set<Contract> contracts;
 
     public House() {
     }
@@ -52,7 +57,13 @@ public class House extends Facility {
         this.floor = floor;
     }
 
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
 
+    public void setContracts(Set<Contract> contracts) {
+        this.contracts = contracts;
+    }
 
     @Override
     public boolean equals(Object o) {

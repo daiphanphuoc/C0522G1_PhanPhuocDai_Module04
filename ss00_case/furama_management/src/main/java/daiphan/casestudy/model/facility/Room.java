@@ -1,18 +1,17 @@
 package daiphan.casestudy.model.facility;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "facility")
 public class Room extends Facility{
     String free;
 
     public Room() {
     }
 
-    public Room(String nameFacility, double leasedArea, double rentalCosts, int maxPerson, RentType rentalType, FacilityType facilityType, String description, String free) {
+    public Room(String nameFacility, double leasedArea, double rentalCosts, int maxPerson,
+                RentType rentalType, FacilityType facilityType, String description, String free) {
         super(nameFacility, leasedArea, rentalCosts, maxPerson, rentalType, facilityType, description);
         this.free = free;
     }

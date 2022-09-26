@@ -1,16 +1,21 @@
 package daiphan.casestudy.model.facility;
 
+import daiphan.casestudy.model.business.Contract;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "facility")
 public class Villa extends Facility {
     private String room;
     private int floor;
     private double areaPool;
 
+    @OneToMany(mappedBy = "facility")
+    private Set<Contract> contracts;
 
     public Villa() {
     }

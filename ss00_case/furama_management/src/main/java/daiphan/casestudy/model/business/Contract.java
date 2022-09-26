@@ -1,59 +1,73 @@
 package daiphan.casestudy.model.business;
 
-import java.util.Date;
-import java.util.Objects;
+import daiphan.casestudy.model.facility.Facility;
+import daiphan.casestudy.model.person.Customer;
+import daiphan.casestudy.model.person.Employee;
 
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
+
+@Entity
 public class Contract {
 
-    private int contractID;
+    @Id
+    private int id;
     private Date start;
     private Date end;
     private double deposit;
     private double totalMoney;
-    private int iDCustomer;
-    private int iDEmployee;
-    private int iDFacility;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
     private boolean isDelete;
+
+    @OneToMany(mappedBy = "contract")
+    private Set<ContractDetail> contractDetails;
+
+    public Facility getFacility() {
+        return facility;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
 
     public Contract() {
     }
 
-    public Contract(int contractID, Date start, Date end, double deposit, double totalMoney, int iDCustomer, int iDEmployee, int iDFacility) {
-        this.contractID = contractID;
+    public Contract(int id, Date start, Date end, double deposit, double totalMoney,
+                    Customer customer, Employee employee, Facility facility, boolean isDelete) {
+        this.id = id;
         this.start = start;
         this.end = end;
         this.deposit = deposit;
         this.totalMoney = totalMoney;
-        this.iDCustomer = iDCustomer;
-        this.iDEmployee = iDEmployee;
-        this.iDFacility = iDFacility;
+        this.customer = customer;
+        this.employee = employee;
+        this.facility = facility;
+        this.isDelete = isDelete;
     }
 
-    public Contract(int contractID, Date start, Date end, double deposit, int iDCustomer, int iDEmployee, int iDFacility) {
-        this.contractID = contractID;
-        this.start = start;
-        this.end = end;
-        this.deposit = deposit;
-        this.iDCustomer = iDCustomer;
-        this.iDEmployee = iDEmployee;
-        this.iDFacility = iDFacility;
+    public int getId() {
+        return id;
     }
 
-    public Contract(Date start, Date end, double deposit, int iDCustomer, int iDEmployee, int iDFacility) {
-        this.start = start;
-        this.end = end;
-        this.deposit = deposit;
-        this.iDCustomer = iDCustomer;
-        this.iDEmployee = iDEmployee;
-        this.iDFacility = iDFacility;
-    }
-
-    public int getContractID() {
-        return contractID;
-    }
-
-    public void setContractID(int contractID) {
-        this.contractID = contractID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getStart() {
@@ -88,27 +102,23 @@ public class Contract {
         this.totalMoney = totalMoney;
     }
 
-    public int getiDCustomer() {
-        return iDCustomer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public void setiDCustomer(int iDCustomer) {
-        this.iDCustomer = iDCustomer;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public int getiDEmployee() {
-        return iDEmployee;
+    public void setFacility(Facility facility) {
+        this.facility = facility;
     }
 
-    public void setiDEmployee(int iDEmployee) {
-        this.iDEmployee = iDEmployee;
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public int getiDFacility() {
-        return iDFacility;
-    }
-
-    public void setiDFacility(int iDFacility) {
-        this.iDFacility = iDFacility;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 }

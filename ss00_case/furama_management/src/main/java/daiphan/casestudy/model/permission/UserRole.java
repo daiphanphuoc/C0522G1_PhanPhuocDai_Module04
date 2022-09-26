@@ -1,46 +1,56 @@
 package daiphan.casestudy.model.permission;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Email;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class UserRole {
+@Table(name = "user_role")
+public class UserRole implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roleId;
-    private String userName;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "user_name")
+    private User user;
+
+    @Column(name = "is_delete")
     private boolean isDelete;
 
     public UserRole() {
     }
 
-    public UserRole(int roleId) {
-        this.roleId = roleId;
+    public UserRole(Role role, User user, boolean isDelete) {
+        this.role = role;
+        this.user = user;
+        this.isDelete = isDelete;
     }
 
-    public UserRole(int roleId, String userName) {
-        this.roleId = roleId;
-        this.userName = userName;
+    public Role getRole() {
+        return role;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public User getUser() {
+        return user;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 }

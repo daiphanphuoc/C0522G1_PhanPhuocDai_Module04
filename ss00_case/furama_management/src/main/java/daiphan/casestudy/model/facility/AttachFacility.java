@@ -1,9 +1,9 @@
 package daiphan.casestudy.model.facility;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import daiphan.casestudy.model.business.ContractDetail;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class AttachFacility {
@@ -16,6 +16,9 @@ public class AttachFacility {
     private String unit;
     private String status;
     private boolean isDelete;
+
+    @OneToMany(mappedBy = "attachFacility" )
+    private Set<ContractDetail> contractDetails;
 
     public AttachFacility() {
     }
