@@ -8,7 +8,7 @@ public class BlogDto {
     public BlogDto() {
     }
 
-    public BlogDto( String title, String categoryName) {
+    public BlogDto(String title, String categoryName) {
         this.title = title;
         this.categoryName = categoryName;
     }

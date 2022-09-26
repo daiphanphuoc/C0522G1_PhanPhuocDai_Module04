@@ -1,6 +1,5 @@
 package daiphan.exercise.repository;
 
-import daiphan.exercise.dto.BlogDto;
 import daiphan.exercise.dto.IBlogDto;
 import daiphan.exercise.model.Blog;
 import org.springframework.data.domain.Page;
@@ -34,6 +33,6 @@ public interface IBlogRepository extends JpaRepository<Blog, Integer> {
 
     @Query(value = "select blog.title as title, category.name_category as categoryName " +
             "from blog inner join category on category.id = blog.category_id " +
-            "where blog.is_delete = 0 ",nativeQuery = true)
+            "where blog.is_delete = 0 ", nativeQuery = true)
     List<IBlogDto> searchInterface(String key);
 }
