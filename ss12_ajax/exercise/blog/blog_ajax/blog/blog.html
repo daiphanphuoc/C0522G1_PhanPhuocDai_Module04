@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Blog</title>
+
+</head>
+<body>
+
+<h3>Blog List</h3>
+<div class="row">
+    <div class="input-group w-25">
+        <input type="text" id="search" name="search" placeholder="nhập tên tiêu đề blog"/>
+    </div>
+    <div>
+        <button id="button">Search</button>
+    </div>
+</div>
+
+
+<table id="blogs">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <!--        <th>Danh mục</th>-->
+        <th>Tiêu đề</th>
+        <th>Người viết</th>
+        <th>Ngày tạo</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody id="blog">
+
+    </tbody>
+
+</table>
+<button class="btn btn-outline-secondary" type="submit" id="more_load">view more</button>
+
+</body>
+<script src="jquery-3.6.1.js"></script>
+<script>
+
+    let count = 1;
+    $(document).ready(function () {
+
+
+        showBlogs();
+
+        function showBlogs() {
+
+            $.ajax({
+                url: "http://localhost:8080/api/blog/v1",
+                type: "GET",
+                dataType: "json",
+                //contentType: "application/json, charset: utf-8",
+                success: function (data) {
+                    console.log(data);
+                    $("#blog").empty();
+
+                    let content = [];
+                    if (data.length < count) {
+                        count = data.length;
+                    }
+
+                    for (let i = 0; i < count; i++) {
+                        content.push(getBog(data[i], i));
+
+                    }
+                    $("#blogs").append(content.join(""));
+                }
+            })
+        }
+
+        function getBog(blog, index) {
+            return `<tr>` +
+                `<td >${index}</td>` +
+                `<td>${blog.title}</td>` +
+                `<td >${blog.author}</td>` +
+                `<td>${blog.dateOfWriting}</td>` +
+                `<td><a href="${blog.id}">edit</a></td>` +
+                `<td>` +
+                `<a href="${blog.id}">delete</a>` +
+                `</td>` +
+                `<td><a href="${blog.id}">view</a></td>` +
+                `</tr>`;
+
+        }
+
+        $("#more_load").click(function () {
+
+            $.ajax({
+                url: "http://localhost:8080/api/blog/v1",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $("#blog").empty();
+
+                    let content = [];
+                    count += 2;
+                    if (data.length < count) {
+                        count = data.length;
+                    }
+
+                    for (let i = 0; i < count; i++) {
+                        content.push(getBog(data[i], i));
+                    }
+
+                    $("#blogs").append(content.join(""));
+                }
+            })
+        })
+
+        $("#button").click(function () {
+            let str = $("#search").val();
+            $("tbody").empty();
+            $.ajax({
+                url: "http://localhost:8080/api/blog/v1/?search=" + str,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $("#blog").empty();
+
+                    let content = [];
+                    count += 2;
+                    if (data.length < count) {
+                        count = data.length;
+                    }
+
+                    for (let i = 0; i < count; i++) {
+                        content.push(getBog(data[i], i));
+                    }
+
+                    $("#blogs").append(content.join(""));
+                }
+            })
+        })
+
+    })
+
+</script>
+</html>

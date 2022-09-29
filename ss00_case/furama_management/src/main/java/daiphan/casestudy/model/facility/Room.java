@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 public class Room extends Facility{
-    String free;
+    private String free;
 
     public Room() {
     }
