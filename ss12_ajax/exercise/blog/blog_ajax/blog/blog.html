@@ -42,16 +42,18 @@
 <script src="jquery-3.6.1.js"></script>
 <script>
 
+    let str = "";
     let count = 1;
     $(document).ready(function () {
 
 
-        showBlogs(count);
+        showBlogs(count, str);
 
-        function showBlogs(count) {
+        function showBlogs(count, search) {
 
             $.ajax({
-                url: "http://localhost:8080/api/blog/v1",
+                // url: "http://localhost:8080/api/blog/v1",
+                url: "http://localhost:8080/api/blog/v1?search=" + search,
                 type: "GET",
                 dataType: "json",
                 //contentType: "application/json, charset: utf-8",
@@ -89,33 +91,13 @@
         }
 
         $("#more_load").click(function () {
-
-            showBlogs(count+=2);
+            showBlogs(count += 2, str);
         })
 
         $("#button").click(function () {
-            let str = $("#search").val();
-            $("tbody").empty();
-            $.ajax({
-                url: "http://localhost:8080/api/blog/v1/?search=" + str,
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    $("#blog").empty();
-
-                    let content = [];
-                    count += 2;
-                    if (data.length < count) {
-                        count = data.length;
-                    }
-
-                    for (let i = 0; i < count; i++) {
-                        content.push(getBog(data[i], i));
-                    }
-
-                    $("#blogs").append(content.join(""));
-                }
-            })
+            str = $("#search").val();
+            count = 1;
+            showBlogs(count, str);
         })
 
     })
