@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserDetail implements UserDetails {
 
-    private  User user;
+    private User user;
 
     public UserDetail(User user) {
         this.user = user;
@@ -19,7 +19,7 @@ public class UserDetail implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
-        for (Role role: user.getRoles()){
+        for (Role role : user.getRoles()) {
             grantedAuthorityList.add(new SimpleGrantedAuthority(role.getName()));
         }
         return grantedAuthorityList;
