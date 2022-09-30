@@ -39,14 +39,7 @@
         <th>Update</th>
     </tr>
     <tbody id="dataList"></tbody>
-    <!--<th:block th:each="smartphone: ${smartphones}">
-        <tr>
-            <td th:text="${smartphone.producer}"></td>
-            <td th:text="${smartphone.model}"></td>
-            <td th:text="${smartphone.price}"></td>
-            <td><a class="deleteSmartphone" th:href="${smartphone.getId()}">Delete</a></td>
-        </tr>
-    </th:block>-->
+
 </table>
 
 
@@ -76,15 +69,16 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="update" onclick="updateSmartPhone()" type="button" class="btn btn-primary">Update</button>
+                <button id="update" type="button" class="btn btn-primary">Update</button>
             </div>
         </div>
     </div>
 </div>
 
 </body>
-<script src="bootstrap-4.6.2-dist/js/bootstrap.js"></script>
 <script src="jquery-3.6.1.js"></script>
+<script src="bootstrap-4.6.2-dist/js/bootstrap.js"></script>
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -120,6 +114,7 @@
         }
 
         function updateSmartPhone() {
+            alert("dddddd");
             //lay du lieu
             let id = $('#idd').val();
             let producer = $('#producerMd').val();
@@ -141,9 +136,9 @@
                 data: JSON.stringify(newSmartphone),
                 //tên API
                 url: "http://localhost:8080/smartphone/" + id,
-                //xử lý khi thành công
                 success: function () {
-                    $('#updatePhone').hide();
+                    console.log("ok");
+                    $('#updatePhone').modal('hide');
                     successHandler();
                 }
 
@@ -168,7 +163,7 @@
                     for (let i = 0; i < data.length; i++) {
                         content.push(getSmartphone(data[i]));
                     }
-                    $("#smartphoneList").append(content.join(""));
+                    $("#dataList").append(content.join(""));
                 }
             });
         }
@@ -223,6 +218,10 @@
             });
 
         });
+
+        $('#update').click(function () {
+            updateSmartPhone();
+        })
     })
 </script>
 </html>
