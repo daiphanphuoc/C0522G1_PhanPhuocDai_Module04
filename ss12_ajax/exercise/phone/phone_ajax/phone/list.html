@@ -114,7 +114,6 @@
         }
 
         function updateSmartPhone() {
-            alert("dddddd");
             //lay du lieu
             let id = $('#idd').val();
             let producer = $('#producerMd').val();
@@ -134,7 +133,6 @@
                 },
                 type: "PUT",
                 data: JSON.stringify(newSmartphone),
-                //tên API
                 url: "http://localhost:8080/smartphone/" + id,
                 success: function () {
                     console.log("ok");
@@ -204,14 +202,14 @@
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                    document.getElementById("idd").value = (data.id);
-                    document.getElementById("producerMd").value = (data.producer);
-                    document.getElementById("modelMd").value = (data.model);
-                    document.getElementById("priceMd").value = (data.price);
-                    // $('#idd').value = (data.id);
-                    // $('#producerMd').value = (data.producer);
-                    // $('#modelMd').value = data.model;
-                    // $('#priceMd').value = data.price;
+                    // document.getElementById("idd").value = (data.id);
+                    // document.getElementById("producerMd").value = (data.producer);
+                    // document.getElementById("modelMd").value = (data.model);
+                    // document.getElementById("priceMd").value = (data.price);
+                    $('#idd').val(data.id);
+                    $('#producerMd').val(data.producer);
+                    $('#modelMd').val(data.model);
+                    $('#priceMd').val(data.price);
                     $('#modalUpdate').click();
                 }
 

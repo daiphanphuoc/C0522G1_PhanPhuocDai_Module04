@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+</head>
+<body>
+<div th:replace="/layout::navbar"></div>
+<h3>Blog List</h3>
+
+<form action="/blog" method="get">
+    <input type="text" id="search" name="search" placeholder="nhập tên tiêu đề blog"/>
+    <input type="submit" value="Search">
+</form>
+<div class="notify">
+    <div th:if="${success}">
+        <h3 th:text="${success}"></h3>
+    </div>
+</div>
+<table id="products">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Danh mục</th>
+        <th>Tiêu đề</th>
+        <th>Người viết</th>
+        <th>Ngày tạo</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${blogList}">
+        <td th:text="${rowStat.count}"></td>
+        <td th:if="${row.category}" th:text="${row.category.nameCategory}"></td>
+        <td th:unless="${row.category}"></td>
+        <td th:text="${row.title}"></td>
+        <td th:text="${row.author}"></td>
+        <td th:text="${row.dateOfWriting}"></td>
+        <td><a th:href="@{/blog/{id}/update(id=${row.id})}">edit</a></td>
+        <td>
+            <a th:href="@{/blog/{id}/delete(id=${row.id})}">delete</a>
+        </td>
+        <td><a th:href="@{/blog/{id}/detail(id=${row.id})}">view</a></td>
+    </tr>
+    </tbody>
+
+</table>
+<a th:href="@{'/blog'(page=0, search=${search})}">first</a>
+<span> </span>
+<a th:if="${blogList.hasPrevious()}" th:href="@{'/blog'(page=${blogList.number - 1}, search=${search})}">Previous</a>
+<span> </span>
+<a th:href="@{'/blog'(page=${blogList.number}, search=${search})}" th:text="${blogList.number + 1}"></a>
+<span> </span>
+<a th:if="${blogList.hasNext()}" th:href="@{'/blog'(page=${blogList.number + 1}, search=${search})}">Next</a>
+<span> </span>
+<a th:href="@{'/blog'(page=${blogList.totalPages - 1}, search=${search})}">last</a>
+
+<!--<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/product/delete/" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">You Want To Delete?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden name="id" id="id">
+&lt;!&ndash;                    <input type="text" hidden name="action" value="delete">&ndash;&gt;
+                    <strong>Customer: </strong>
+                    <span id="nameDelete"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>-->
+<footer th:replace="/layout :: footer"></footer>
+</body>
+<script th:inline="javascript">
+    function deleteProduct(id, name) {
+        document.getElementById("id").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
+</html>

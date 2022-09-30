@@ -46,9 +46,9 @@
     $(document).ready(function () {
 
 
-        showBlogs();
+        showBlogs(count);
 
-        function showBlogs() {
+        function showBlogs(count) {
 
             $.ajax({
                 url: "http://localhost:8080/api/blog/v1",
@@ -90,26 +90,7 @@
 
         $("#more_load").click(function () {
 
-            $.ajax({
-                url: "http://localhost:8080/api/blog/v1",
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    $("#blog").empty();
-
-                    let content = [];
-                    count += 2;
-                    if (data.length < count) {
-                        count = data.length;
-                    }
-
-                    for (let i = 0; i < count; i++) {
-                        content.push(getBog(data[i], i));
-                    }
-
-                    $("#blogs").append(content.join(""));
-                }
-            })
+            showBlogs(count+=2);
         })
 
         $("#button").click(function () {
