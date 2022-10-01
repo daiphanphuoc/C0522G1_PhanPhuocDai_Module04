@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="/layout::hearder">
+
+    </div>
+    <div th:replace="/layout::navbar">
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div th:replace="layout::left">
+
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+
+            <div style="text-align: center">
+                <table id="tableContract" class="table table-striped">
+                    <thead>
+                    <tr style="background: aquamarine">
+                        <th>STT</th>
+                        <th>Dịch vụ</th>
+                        <th>Khách hàng</th>
+                        <th>Nhân viên</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Tiền đặt cọc</th>
+                        <th>Tổng tiền</th>
+                        <th></th>
+                        <th>các dịch vụ đi kèm</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach varStatus="status" var="contract" items="${contractList}">
+                        <tr>
+                            <td>${status.count}</td>
+                            <td>
+                                <c:forEach var="facility" items="${facilityList}">
+                                    <c:if test="${facility.getIDFacility()==contract.getiDFacility()}">
+                                        <a data-bs-toggle="modal" data-bs-target="#infoFacility"
+                                           onclick="infoFacility('${facility.getInfo()}')" href="#">
+                                            ${facility.nameFacility}
+                                        </a>
+                                    </c:if>
+                                </c:forEach>
+                            </td>
+                            <td>
+                                <c:forEach var="customer" items="${customerList}">
+                                    <c:if test="${customer.iDCustomer==contract.iDCustomer}">
+                                        <a data-bs-toggle="modal" data-bs-target="#infoCustomer"
+                                           onclick="infoCustomer('${customer.getInfo()}')" href="#">
+                                            ${customer.name}
+                                        </a>
+                                    </c:if>
+                                </c:forEach>
+                            </td>
+                            <td>
+                                <c:forEach var="employee" items="${employeeList}">
+                                    <c:if test="${employee.iDEmployee==contract.iDEmployee}">
+                                        <a data-bs-toggle="modal" data-bs-target="#infoEmployee"
+                                           onclick="infoEmployee('${employee.getInfo()}')" href="#">
+                                            ${employee.name}
+                                        </a>
+                                    </c:if>
+                                </c:forEach>
+                            </td>
+                            <td>${contract.getStart()}</td>
+                            <td>${contract.getEnd()}</td>
+                            <td>${contract.getDeposit()}</td>
+                            <td></td>
+                            <td>
+                                <a href="#">
+                                    <button type="button" class="btn btn-primary">+</button>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/contract?action=modal&id=${contract.getContractID()}&modal=showAttachFacility"
+                                >
+                                    <button type="button"
+                                            class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#showAttachFacility">
+                                        Danh sách các dịch vụ đi kèm
+                                    </button>
+
+                                </a>
+                                <button hidden data-bs-toggle="modal" data-bs-target="#showAttachFacility"
+                                        id="clickModal"></button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--//body-->
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div th:replace="layout::footer">
+
+        </div>
+    </div>
+</div>
+
+<<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+    Launch
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Thêm mới hợp đồng</h3>
+
+
+                <form action="/contract?action=create" method="post">
+                    <fieldset>
+                        <legend style="color: crimson">Thông tin hợp đồng</legend>
+                        <table>
+                            <tr>
+                                <td>Ngày bắt đầu:</td>
+                                <td><input type="date" id="startDay" class="form-control" name="startDay"></td>
+                            </tr>
+                            <tr>
+                                <td>Ngày kết thúc:</td>
+                                <td><input type="date" id="endDay" class="form-control" name="endDay"></td>
+                            </tr>
+                            <tr>
+                                <td>Tiền trả trước:</td>
+                                <td><input type="text" id="deposit" class="form-control" placeholder="Input deposit"
+                                           name="deposit"></td>
+                            </tr>
+                            <tr>
+                                <td>Nhân viên:</td>
+                                <td>
+                                    <select id="employee" class="form-control" name="employee">
+                                        <option th:each="employee:${employeeList}" th:value="${employee.id}"
+                                                th:text="${employee.name}"></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Khách hàng:</td>
+                                <td>
+                                    <select id="customer" class="form-control" name="customer">
+                                        <option th:each="customer:${customerList}" th:value="${customer.id}"
+                                                th:text="${customer.name}"></option>
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dịch vụ</td>
+                                <td>
+                                    <select id="facility" class="form-control" name="facility">
+                                        <c:forEach var="facility" items="${facilityList}">
+                                            <option value="${facility.getIDFacility()}">${facility.nameFacility}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" value="Create"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

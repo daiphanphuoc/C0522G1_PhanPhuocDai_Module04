@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid" >
+    <div th:replace="/layout::hearder">
+
+    </div>
+    <div th:replace="/layout::navbar">
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div th:replace="layout::left">
+
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+            <div class="row ">
+                <img width="100%"  id="img" onclick="changeImage()"
+                     src="https://furamavietnam.com/wp-content/uploads/2018/11/Vietnam_Danang_Furama_Resort_Exterior_Courtyard-Night.jpg"
+                     alt="">
+            </div>
+            <script>
+                let index = 1;
+                changeImage = function () {
+                    const imgs = ["https://furamavietnam.com/wp-content/uploads/2018/11/Vietnam_Danang_Furama_Resort_Exterior_Courtyard-Night.jpg",
+                        "https://furamavietnam.com/wp-content/uploads/2018/11/Vietnam_Danang_Furama_Resort_Exterior-Lobby.jpg",
+                        "https://furamavietnam.com/wp-content/uploads/2018/11/Vietnam_Danang_Furama_Resort_Exterior-Lagoon-Pool.jpg"];
+                    document.getElementById('img').src = imgs[index];
+                    index++;
+                    if (index == 3) {
+                        index = 0;
+                    }
+                }
+                setInterval(changeImage, 2000);
+            </script>
+        </div>
+    </div>
+    <div class="row">
+        <div th:replace="layout::footer">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
