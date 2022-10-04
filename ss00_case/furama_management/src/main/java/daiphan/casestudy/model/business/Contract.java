@@ -12,6 +12,7 @@ import java.util.Set;
 public class Contract {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Date start;
     private Date end;

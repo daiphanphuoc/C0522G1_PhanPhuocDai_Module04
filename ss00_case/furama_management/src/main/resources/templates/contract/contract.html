@@ -24,8 +24,8 @@
 
             <div style="text-align: center">
                 <table id="tableContract" class="table table-striped">
-                    <thead>
-                    <tr style="background: aquamarine">
+                    <thead  class="text-center bg-info text-bg-dark">
+                    <tr>
                         <th>STT</th>
                         <th>Dịch vụ</th>
                         <th>Khách hàng</th>
@@ -39,63 +39,50 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach varStatus="status" var="contract" items="${contractList}">
-                        <tr>
-                            <td>${status.count}</td>
-                            <td>
-                                <c:forEach var="facility" items="${facilityList}">
-                                    <c:if test="${facility.getIDFacility()==contract.getiDFacility()}">
-                                        <a data-bs-toggle="modal" data-bs-target="#infoFacility"
-                                           onclick="infoFacility('${facility.getInfo()}')" href="#">
-                                            ${facility.nameFacility}
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-                            </td>
-                            <td>
-                                <c:forEach var="customer" items="${customerList}">
-                                    <c:if test="${customer.iDCustomer==contract.iDCustomer}">
-                                        <a data-bs-toggle="modal" data-bs-target="#infoCustomer"
-                                           onclick="infoCustomer('${customer.getInfo()}')" href="#">
-                                            ${customer.name}
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-                            </td>
-                            <td>
-                                <c:forEach var="employee" items="${employeeList}">
-                                    <c:if test="${employee.iDEmployee==contract.iDEmployee}">
-                                        <a data-bs-toggle="modal" data-bs-target="#infoEmployee"
-                                           onclick="infoEmployee('${employee.getInfo()}')" href="#">
-                                            ${employee.name}
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-                            </td>
-                            <td>${contract.getStart()}</td>
-                            <td>${contract.getEnd()}</td>
-                            <td>${contract.getDeposit()}</td>
-                            <td></td>
-                            <td>
-                                <a href="#">
-                                    <button type="button" class="btn btn-primary">+</button>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/contract?action=modal&id=${contract.getContractID()}&modal=showAttachFacility"
-                                >
-                                    <button type="button"
-                                            class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#showAttachFacility">
-                                        Danh sách các dịch vụ đi kèm
-                                    </button>
 
-                                </a>
-                                <button hidden data-bs-toggle="modal" data-bs-target="#showAttachFacility"
-                                        id="clickModal"></button>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                    <tr th:each="status,contract:${contractList}">
+                        <td>${status.count}</td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#infoFacility"
+                               onclick="infoFacility('${facility.getInfo()}')" href="#"
+                               th:text="${contract.facility.name}">
+                            </a>
+                        </td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#infoCustomer"
+                               onclick="infoCustomer('${customer.getInfo()}')" href="#"
+                               th:text="${contract.customer.name}">
+                            </a>
+                        </td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#infoEmployee"
+                               onclick="infoEmployee('${employee.getInfo()}')" href="#" th:text="${employee.name}">
+                            </a>
+                        </td>
+                        <td th:text="${contract.start}"></td>
+                        <td th:text="${contract.end}"></td>
+                        <td th:text="${contract.deposit}"></td>
+                        <td></td>
+                        <td>
+                            <a href="#">
+                                <button type="button" class="btn btn-primary">+</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/contract?action=modal&id=${contract.getContractID()}&modal=showAttachFacility"
+                            >
+                                <button type="button"
+                                        class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#showAttachFacility">
+                                    Danh sách các dịch vụ đi kèm
+                                </button>
+
+                            </a>
+                            <button hidden data-bs-toggle="modal" data-bs-target="#showAttachFacility"
+                                    id="clickModal"></button>
+                        </td>
+                    </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -112,12 +99,12 @@
     </div>
 </div>
 
-<<!-- Button trigger modal -->
+<<!-- Button trigger modal create contract-->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
     Launch
 </button>
 
-<!-- Modal -->
+<!-- Modal create contract-->
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

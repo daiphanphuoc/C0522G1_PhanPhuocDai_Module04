@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid" >
+    <div th:replace="/layout::hearder">
+
+    </div>
+    <div th:replace="/layout::navbar">
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div th:replace="layout::left">
+
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+            <h3>Thêm mới nhân viên</h3>
+            <div class="d-flex justify-content-center">
+                <form class="w-50 border border-2 border-success p-3 rounded formCSS" th:action="@{/employee/create}"
+                      th:object="${employeeDto}" method="POST" novalidate="novalidate">
+                    <div class="form-group">
+                        <label for="name" class="h6">Tên nhân viên:</label>
+                        <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                        <div class="input-group">
+                            <input type="text" id="name" class="form-control" placeholder="Nhập tên nhân viên.."
+                                   th:field="*{name}"/>
+                            <span class="input-group-text"><i class="fa-solid fa-person-circle-question"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label for="dateOfBirth" class="h6">Ngày sinh:</label>
+                        <p style="color: red" th:if="${#fields.hasErrors('birthday')}"
+                           th:errors="*{birthday}"></p>
+                        <input type="date" id="dateOfBirth" class="form-control" th:field="*{birthday}"
+                               th:min="${minAge}" th:max="${maxAge}"/>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label for="idCard" class="h6">Số CMND/CCCD:</label>
+                        <p style="color: red" th:if="${#fields.hasErrors('idCitizen')}"
+                           th:errors="*{idCitizen}"></p>
+                        <div class="input-group">
+                            <input type="text" id="idCard" class="form-control" placeholder="Nhập số CMND/CCCD.."
+                                   th:field="*{idCitizen}"/>
+                            <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label for="salary" class="h6">Lương (VNĐ):</label>
+                        <p style="color: red" th:if="${#fields.hasErrors('salary')}"
+                           th:errors="*{salary}"></p>
+                        <div class="input-group">
+                            <input type="number" id="salary" class="form-control" placeholder="Nhập lương..."
+                                   th:field="*{salary}"/>
+                            <span class="input-group-text"><i class="fa-solid fa-money-bill-wave"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label for="phone" class="h6">Số điện thoại:</label>
+                        <p style="color: red" th:if="${#fields.hasErrors('phone')}"
+                           th:errors="*{phone}"></p>
+                        <div class="input-group">
+                            <input type="text" id="phone" class="form-control" placeholder="Nhập SĐT.."
+                                   th:field="*{phone}"/>
+                            <span class="input-group-text"><i class="fa-solid fa-square-phone"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label for="email" class="h6">Email:</label>
+                        <p style="color: red" th:if="${#fields.hasErrors('email')}"
+                           th:errors="*{email}"></p>
+                        <div class="input-group">
+                            <input type="text" id="email" class="form-control" placeholder="Nhập email.."
+                                   th:field="*{email}"/>
+                            <span class="input-group-text"><i class="fa-solid fa-envelope-circle-check"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label for="address" class="h6">Địa chỉ:</label>
+                        <p style="color: red" th:if="${#fields.hasErrors('address')}"
+                           th:errors="*{address}"></p>
+                        <div class="input-group">
+                            <input type="text" id="address" class="form-control" placeholder="Nhập địa chỉ.."
+                                   th:field="*{address}"/>
+                            <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label class="h6" for="position">Vị trí:</label>
+                        <div class="input-group">
+                            <select id="position" class="form-control" th:field="*{position.id}">
+                                <option th:each="item : ${positionList}" th:value="${item.id}"
+                                        th:text="${item.name}"></option>
+                            </select>
+                            <span class="input-group-text"><i class="fa-solid fa-map"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label class="h6" for="educationDegree">Trình độ học vấn:</label>
+                        <div class="input-group">
+                            <select id="educationDegree" class="form-control" th:field="*{degree.id}">
+                                <option th:each="item : ${degreeList}" th:value="${item.id}"
+                                        th:text="${item.name}"></option>
+                            </select>
+                            <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group">
+                        <label class="h6" for="division">Bộ phận:</label>
+                        <div class="input-group">
+                            <select id="division" class="form-control" th:field="*{division.id}">
+                                <option th:each="item : ${divisionList}" th:value="${item.id}"
+                                        th:text="${item.name}"></option>
+                            </select>
+                            <span class="input-group-text"><i class="fa-brands fa-creative-commons-nd"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 text-center">
+                        <button class="btn btn-info btn-outline-success btn-sm border border-2 border-success text-dark">
+                            -- Lưu <i class="fa-solid fa-floppy-disk"></i> --
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div th:replace="layout::footer">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

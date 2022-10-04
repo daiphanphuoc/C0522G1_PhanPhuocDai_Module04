@@ -1,6 +1,7 @@
 package daiphan.casestudy.model.person;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -11,6 +12,7 @@ import java.util.Date;
 public abstract class Person {
     private String name;
     private String idCitizen;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private boolean sex;
     private String phone;

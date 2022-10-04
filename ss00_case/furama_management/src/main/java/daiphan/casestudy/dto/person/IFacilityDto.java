@@ -1,4 +1,4 @@
-package daiphan.casestudy.model.dto;
+package daiphan.casestudy.dto.person;
 
 import daiphan.casestudy.model.facility.FacilityType;
 import daiphan.casestudy.model.facility.RentType;
@@ -15,17 +15,9 @@ public interface IFacilityDto {
 
     int getMaxPerson();
 
-    RentType getRentType();
+    String getRentType();
 
-    FacilityType getFacilityType();
+    String getFacilityType();
 
     String getDescription();
-
-    String getRoom();
-
-    int getFloor();
-
-    double getAreaPool();
-
-    String getFree();
 }

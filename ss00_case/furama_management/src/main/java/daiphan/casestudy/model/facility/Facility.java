@@ -14,6 +14,7 @@ public abstract class Facility {
     private double leasedArea;
     private double rentalCosts;
     private int maxPerson;
+    private boolean isDelete;
 
     @ManyToOne
     @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
@@ -49,6 +50,14 @@ public abstract class Facility {
         this.rentType = rentalType;
         this.facilityType = facilityType;
         this.description = description;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 
     public int getId() {
