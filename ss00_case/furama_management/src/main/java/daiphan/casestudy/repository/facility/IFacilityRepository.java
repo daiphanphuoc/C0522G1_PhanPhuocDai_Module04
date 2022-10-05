@@ -19,8 +19,8 @@ import javax.transaction.Transactional;
 public interface IFacilityRepository extends JpaRepository<Facility,Integer> {
 
     @Modifying
-    @Query(value = "update Facility set is_delete = 1 where id = :id  and is_delete = 0", nativeQuery = true)
-    boolean deleteLogicById(@Param("id") int id);
+    @Query(value = "update facility set is_delete = 1 where id = :id  and is_delete = 0 ", nativeQuery = true)
+    int  deleteLogicById(@Param("id") int id);
 
     @Query(value = "select facility.id, facility.`name`, `description`,leased_area as leasedArea, max_person as maxPerson," +
             "  rental_costs as rentalCosts, rent_type.`name` as rentType, facility_type.`name` as facilityType  " +

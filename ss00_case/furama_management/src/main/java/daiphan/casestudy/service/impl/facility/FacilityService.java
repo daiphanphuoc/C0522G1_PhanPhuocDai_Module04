@@ -39,7 +39,7 @@ public class FacilityService implements IFacilityService {
 
     @Override
     public boolean delete(int id) {
-        return facilityRepository.deleteLogicById(id);
+        return facilityRepository.deleteLogicById(id)==1;
     }
 
     @Override

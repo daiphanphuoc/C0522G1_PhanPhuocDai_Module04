@@ -82,10 +82,10 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    public String showEmployees(@RequestParam(defaultValue = "") String searchName,
+    public String showEmployees(Model model,
+                                @RequestParam(defaultValue = "") String searchName,
                                 @RequestParam(defaultValue = "") String searchAddress,
                                 @RequestParam(defaultValue = "") String searchPosition,
-                                Model model,
                                 @PageableDefault(value = 3) Pageable pageable) {
         useTotal(searchName, searchAddress, searchPosition, model, pageable);
         return "employee/employee";
@@ -105,7 +105,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable int id, Model model,
+    public String showModalUpdate(@PathVariable int id, Model model,
                                  @RequestParam(defaultValue = "") String searchName,
                                  @RequestParam(defaultValue = "") String searchAddress,
                                  @RequestParam(defaultValue = "") String searchPosition,
@@ -141,7 +141,7 @@ public class EmployeeController {
                 }
             }*/
             useTotal(searchName, searchAddress, searchPosition, model, pageable);
-            if (bindingResult.hasFieldErrors() ) {
+            if (bindingResult.hasFieldErrors()) {
                 model.addAttribute("action", "openUpdate");
                 return "employee/employee";
             }
@@ -149,7 +149,7 @@ public class EmployeeController {
             BeanUtils.copyProperties(employeeDtoUpdate, employee);
             employeeService.update(employee);
 
-          /*  useTotal(searchName, searchAddress, searchPosition, model, pageable);*/
+            /*  useTotal(searchName, searchAddress, searchPosition, model, pageable);*/
 
             return "employee/employee";
         }
