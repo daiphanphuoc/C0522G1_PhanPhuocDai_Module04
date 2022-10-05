@@ -27,23 +27,20 @@
 
             <h3 style="color: #6a1a21;text-align: center">Quản lý cơ sở dịch vụ</h3>
             <!--form tìm kiếm-->
-                                 <option th:if="(${searchRentType})" th:value="${searchRentType}"></option>
-            <!--                     <option th:if="(${searchFacilityType})" th:value="${searchFacilityType}"></option>-->
             <form action="/facility" method="get">
-                 <input type="text" name="searchName" th:value="${searchName}" placeholder="nhập tên dịch vụ">
-                 <select name="searchRentType" >
-                     <option value="" th:text="Chọn"></option>
-<!--                     <option th:if="(${searchRentType})" th:value="${searchRentType}"></option>-->
-                     <option th:each="rentType:${rentTypeList} " th:text="${rentType.name}"
-                 th:value="${rentType.name}"></option>
-                 </select>
-                 <select name="searchFacilityType" >
-                     <option value="" th:text="Chọn"></option>
-                     <option th:each="facilityType:${facilityTypeList} " th:text="${facilityType.name}"
-                             th:value="${facilityType.name}"> </option>
-                 </select>
-                 <button type="submit">Search</button>
-             </form>
+                <input type="text" name="searchName" th:value="${searchName}" placeholder="nhập tên dịch vụ">
+                <select name="searchRentType">
+                    <option value="" th:text="Chọn"></option>
+                    <option th:each="rentType:${rentTypeList} " th:text="${rentType.name}"
+                            th:value="${rentType.name}"></option>
+                </select>
+                <select name="searchFacilityType">
+                    <option value="" th:text="Chọn"></option>
+                    <option th:each="facilityType:${facilityTypeList} " th:text="${facilityType.name}"
+                            th:value="${facilityType.name}"></option>
+                </select>
+                <button class="btn btn-success btn-sm " type="submit">Search</button>
+            </form>
 
             <input hidden type="text" id="success" th:value="${msg}">
 
@@ -116,6 +113,15 @@
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link"
+                           th:href="@{'/facility'(page=${0}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                           th:if="${facilityList.hasPrevious()}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item disabled" th:unless="${facilityList.hasPrevious()}">
+                        <a class="page-link">&laquo;&laquo;</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link"
                            th:href="@{'/facility'(page=${facilityList.number - 1}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
                            th:if="${facilityList.hasPrevious()}">&laquo;</a>
                     </li>
@@ -124,7 +130,8 @@
                     </li>
 
                     <li class="page-item"><a class="page-link" th:href="@{'/facility'(page=${facilityList.number - 1},
-            searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}" th:if="${facilityList.hasPrevious()}" th:text="${facilityList.number}"></a>
+            searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                                             th:if="${facilityList.hasPrevious()}" th:text="${facilityList.number}"></a>
                     </li>
 
                     <li class="page-item active">
@@ -145,6 +152,15 @@
                     </li>
                     <li class="page-item disabled" th:unless="${facilityList.hasNext()}">
                         <a class="page-link">&raquo;</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link"
+                           th:href="@{'/facility'(page=${facilityList.totalPages - 1},searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                           th:if="${facilityList.hasNext()}">&raquo;&raquo;</a>
+                    </li>
+                    <li class="page-item disabled" th:unless="${facilityList.hasNext()}">
+                        <a class="page-link">&raquo;&raquo;</a>
                     </li>
                 </ul>
             </nav>
@@ -183,7 +199,7 @@
                             <label class="h6">Loại dịch vụ:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control"
-                                       th:value="${updateFacilityDto.facilityType.name}" readonly />
+                                       th:value="${updateFacilityDto.facilityType.name}" readonly/>
                                 <span class="input-group-text"><i class="fa-solid fa-house-user"></i></span>
                             </div>
                         </div>

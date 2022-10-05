@@ -1,5 +1,6 @@
 package daiphan.casestudy.model.dto;
 
+import daiphan.casestudy.model.permission.User;
 import daiphan.casestudy.model.person.Division;
 import daiphan.casestudy.model.person.EducationDegree;
 import daiphan.casestudy.model.person.Position;
@@ -42,6 +43,7 @@ public class EmployeeDto implements Validator {
     private EducationDegree degree;
     private Position position;
     private Division division;
+    private User user;
 
     @Min(3000000)
     private double salary;
@@ -51,7 +53,7 @@ public class EmployeeDto implements Validator {
 
     public EmployeeDto(int id, String name, String idCitizen, Date birthday, boolean sex,
                        String phone, String email, String address, EducationDegree degree,
-                       Position position, Division division, double salary) {
+                       Position position, Division division, User user, double salary) {
         this.id = id;
         this.name = name;
         this.idCitizen = idCitizen;
@@ -63,7 +65,16 @@ public class EmployeeDto implements Validator {
         this.degree = degree;
         this.position = position;
         this.division = division;
+        this.user = user;
         this.salary = salary;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getId() {

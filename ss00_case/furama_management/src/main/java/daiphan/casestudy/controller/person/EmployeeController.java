@@ -1,8 +1,11 @@
 package daiphan.casestudy.controller.person;
 
+import daiphan.casestudy.dto.person.ICustomerDto;
 import daiphan.casestudy.dto.person.IEmployeeDto;
+import daiphan.casestudy.model.dto.CustomerDto;
 import daiphan.casestudy.model.dto.EmployeeDto;
 import daiphan.casestudy.model.person.Customer;
+import daiphan.casestudy.model.person.CustomerType;
 import daiphan.casestudy.model.person.Employee;
 import daiphan.casestudy.service.person.IDivisionService;
 import daiphan.casestudy.service.person.IEducationDegreeService;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/employee")
@@ -38,18 +42,17 @@ public class EmployeeController {
     private IDivisionService divisionService;
 
     @GetMapping("/delete")
-    public String deleteByModal(@RequestParam int id, RedirectAttributes redirectAttributes){
-        Employee employee =employeeService.findById(id);
-        if(employee!=null){
+    public String deleteByModal(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        Employee employee = employeeService.findById(id);
+        if (employee != null) {
             boolean rs = employeeService.delete(id);
-            if(rs){
-                redirectAttributes.addFlashAttribute("mesDelete","Xóa thành công");
+            if (rs) {
+                redirectAttributes.addFlashAttribute("mesDelete", "Xóa thành công");
+            } else {
+                redirectAttributes.addFlashAttribute("mesDelete", "Xóa thất bại");
             }
-            else{
-                redirectAttributes.addFlashAttribute("mesDelete","Xóa thất bại");
-            }
-        }else{
-            redirectAttributes.addFlashAttribute("mesDelete","Không tồn tại");
+        } else {
+            redirectAttributes.addFlashAttribute("mesDelete", "Không tồn tại");
         }
         return "redirect:/employee";
     }
@@ -59,10 +62,15 @@ public class EmployeeController {
                           @RequestParam(defaultValue = "") String searchPosition,
                           Model model,
                           @PageableDefault(value = 3/*, sort = "customer.name",
-                                        direction = Sort.Direction.DESC*/) Pageable pageable){
+                                        direction = Sort.Direction.DESC*/) Pageable pageable) {
         model.addAttribute("positionList", positionService.findAll());
         model.addAttribute("divisionList", divisionService.findAll());
         model.addAttribute("degreeList", degreeService.findAll());
+
+        model.addAttribute("employee", new EmployeeDto());
+
+        model.addAttribute("employeeDtoUpdate", new EmployeeDto());
+        model.addAttribute("newEmployeeDto", new EmployeeDto());
         LocalDate minAge = LocalDate.now().minusYears(80);
         LocalDate maxAge = LocalDate.now().minusYears(18);
         model.addAttribute("minAge", minAge);
@@ -71,18 +79,15 @@ public class EmployeeController {
         model.addAttribute("searchAddress", searchAddress);
         model.addAttribute("searchPosition", searchPosition);
         model.addAttribute("employees", employeeService.find(searchName, searchAddress, searchPosition, pageable));
-
-
     }
+
     @GetMapping()
     public String showEmployees(@RequestParam(defaultValue = "") String searchName,
                                 @RequestParam(defaultValue = "") String searchAddress,
                                 @RequestParam(defaultValue = "") String searchPosition,
                                 Model model,
-                                @PageableDefault(value = 3/*, sort = "customer.name",
-                                        direction = Sort.Direction.DESC*/) Pageable pageable) {
-        model.addAttribute("employeeDtoUpdate",new EmployeeDto());
-        useTotal(searchName,searchAddress,searchPosition,model,pageable);
+                                @PageableDefault(value = 3) Pageable pageable) {
+        useTotal(searchName, searchAddress, searchPosition, model, pageable);
         return "employee/employee";
     }
 
@@ -100,17 +105,68 @@ public class EmployeeController {
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable int id, Model model) {
-        EmployeeDto employeeDto= new EmployeeDto();
-        model.addAttribute("positionList", positionService.findAll());
-        model.addAttribute("divisionList", divisionService.findAll());
-        model.addAttribute("degreeList", degreeService.findAll());
-        LocalDate minAge = LocalDate.now().minusYears(80);
-        LocalDate maxAge = LocalDate.now().minusYears(18);
-        model.addAttribute("minAge", minAge);
-        model.addAttribute("maxAge", maxAge);
-        BeanUtils.copyProperties(employeeService.findById(id),employeeDto);
-        model.addAttribute("employeeDtoUpdate",employeeDto);
+    public String showUpdateForm(@PathVariable int id, Model model,
+                                 @RequestParam(defaultValue = "") String searchName,
+                                 @RequestParam(defaultValue = "") String searchAddress,
+                                 @RequestParam(defaultValue = "") String searchPosition,
+                                 @PageableDefault(value = 3) Pageable pageable) {
+        useTotal(searchName, searchAddress, searchPosition, model, pageable);
+        EmployeeDto employeeDto = new EmployeeDto();
+        BeanUtils.copyProperties(employeeService.findById(id), employeeDto);
+        model.addAttribute("employeeDtoUpdate", employeeDto);
+        model.addAttribute("action", "openUpdate");
+        return "employee/employee";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateByModal(@PathVariable int id,
+                                @ModelAttribute EmployeeDto employeeDtoUpdate,
+                                Model model, BindingResult bindingResult,
+                                @RequestParam(defaultValue = "") String searchName,
+                                @RequestParam(defaultValue = "") String searchAddress,
+                                @RequestParam(defaultValue = "") String searchPosition,
+                                @PageableDefault(value = 3) Pageable pageable) {
+
+        Employee employee = employeeService.findById(id);
+        if (employee != null) {
+            new EmployeeDto().validate(employeeDtoUpdate, bindingResult);
+
+           /* boolean isDuplicateIdCard = false;
+            List<ICustomerDto> customerDtos = customerService.findAllDto();
+            for (ICustomerDto customerDto : customerDtos) {
+                if (customerDtoUpdate.getIdCitizen().equals(customerDto.getIdCitizen()) &&
+                        !customerDtoUpdate.getIdCitizen().equals(customer.getIdCitizen())) {
+                    isDuplicateIdCard = true;
+                    break;
+                }
+            }*/
+            useTotal(searchName, searchAddress, searchPosition, model, pageable);
+            if (bindingResult.hasFieldErrors() ) {
+                model.addAttribute("action", "openUpdate");
+                return "employee/employee";
+            }
+
+            BeanUtils.copyProperties(employeeDtoUpdate, employee);
+            employeeService.update(employee);
+
+          /*  useTotal(searchName, searchAddress, searchPosition, model, pageable);*/
+
+            return "employee/employee";
+        }
+        return "/layout";
+    }
+
+    @GetMapping("/view/{id}")
+    public String showInfo(@PathVariable int id, Model model,
+                           @RequestParam(defaultValue = "") String searchName,
+                           @RequestParam(defaultValue = "") String searchAddress,
+                           @RequestParam(defaultValue = "") String searchPosition,
+                           @PageableDefault(value = 3) Pageable pageable) {
+        useTotal(searchName, searchAddress, searchPosition, model, pageable);
+        EmployeeDto employeeDto = new EmployeeDto();
+        BeanUtils.copyProperties(employeeService.findById(id), employeeDto);
+        model.addAttribute("employee", employeeDto);
+        model.addAttribute("action", "openInfo");
         return "employee/employee";
     }
 
