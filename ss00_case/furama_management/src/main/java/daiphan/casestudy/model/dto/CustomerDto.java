@@ -30,7 +30,7 @@ public class CustomerDto implements Validator {
     private boolean sex;
 
     @NotBlank(message = "Số điện thoại không được để trống.")
-    @Pattern(regexp = "^((0|[(]84[)][+])9[01]\\d{7})| *$", message =
+    @Pattern(regexp = "^((0|[(]84[)][+])9[01]\\d{7})$", message =
             "Số điện thoại phải đúng định dạng 090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx.")
     private String phone;
     @NotBlank(message = "Email không được để trống.")

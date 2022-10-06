@@ -1,8 +1,6 @@
 package daiphan.casestudy.repository.facility;
 
-import daiphan.casestudy.dto.person.ICustomerDto;
-import daiphan.casestudy.dto.person.IFacilityDto;
-import daiphan.casestudy.model.facility.AttachFacility;
+import daiphan.casestudy.dto.facility.IFacilityDto;
 import daiphan.casestudy.model.facility.Facility;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

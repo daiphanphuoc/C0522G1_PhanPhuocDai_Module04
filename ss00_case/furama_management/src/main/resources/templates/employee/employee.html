@@ -22,25 +22,32 @@
 
         <div class="col-sm-9">
 
-            <h2 class="text-center fw-bold">Danh sách nhân viên</h2>
-            <div class="row my-3">
-                <a class="col-5">
-                    <button id="btnCreate" type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal"
+            <h2 style="color: #6a1a21;text-align: center" class=" my-3">Danh sách nhân viên</h2>
+            <div class="row d-flex my-3">
+                <div class="col-4">
+                    <button id="btnCreate" type="button" class="btn btn-primary btn-sm d-flex justify-content-center" data-bs-toggle="modal"
                             data-bs-target="#createNew">
-                        <span class="fa-solid fa-person-circle-plus text-light h5 my-auto me-1"></span> Thêm mới nhân
+                        <span class="fa-solid fa-person-circle-plus text-light h4 my-auto me-2"></span> Thêm mới nhân
                         viên
                     </button>
-                </a>
-                <fieldset class="col-7">
-                    <form action="/employee" method="get">
+                </div>
+                <div class="col-8">
+                    <form class="d-flex justify-content-center" role="search" action="/employee" method="get">
+                        <input class="form-control me-2" type="search"  name="searchName" th:value="${searchName}" placeholder="Nhập tên nhân viên" aria-label="Search">
+                        <input class="form-control me-2" type="search" name="searchAddress" th:value="${searchAddress}" placeholder="Nhập địa chỉ"  aria-label="Search">
+                        <input class="form-control me-2" type="search" name="searchPosition" th:value="${searchPosition}"
+                               placeholder="Nhập vị trí/ chức vụ"  aria-label="Search">
+                        <button class="btn btn-outline-info" type="submit" style="color: #1d2124">Search</button>
+                    </form>
+                  <!--  <form >
                         <input hidden type="text" name="action" value="search">
                         <input type="text" name="searchName" th:value="${searchName}" placeholder="Nhập tên nhân viên">
                         <input type="text" name="searchAddress" th:value="${searchAddress}" placeholder="Nhập địa chỉ">
                         <input type="text" name="searchPosition" th:value="${searchPosition}"
                                placeholder="Nhập vị trí/ chức vụ">
                         <button class="btn btn-success btn-sm " type="submit">Search</button>
-                    </form>
-                </fieldset>
+                    </form>-->
+                </div>
 
             </div>
             <div class="row my-3">
@@ -87,7 +94,11 @@
 
                     </tbody>
                 </table>
-                <nav aria-label="...">
+
+            </div>
+            <div class="row float-end">
+
+                <nav   aria-label="...">
                     <ul class="pagination">
                         <li class="page-item">
                             <a class="page-link" th:href="@{'/employee'(page=${0},
@@ -468,7 +479,7 @@
 </div>
 
 <!-- Button trigger modal UPDATE-->
-<button id="btnUpdate" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
+<button hidden id="btnUpdate" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
     update
 </button>
 

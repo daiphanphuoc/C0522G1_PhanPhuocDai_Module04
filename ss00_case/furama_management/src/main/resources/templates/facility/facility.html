@@ -25,137 +25,156 @@
         <div class="col-sm-9">
 
 
-            <h3 style="color: #6a1a21;text-align: center">Quản lý cơ sở dịch vụ</h3>
+            <h3 style="color: #6a1a21;text-align: center" class=" my-3">Quản lý cơ sở dịch vụ</h3>
             <!--form tìm kiếm-->
-            <form action="/facility" method="get">
-                <input type="text" name="searchName" th:value="${searchName}" placeholder="nhập tên dịch vụ">
-                <select name="searchRentType">
-                    <option value="" th:text="Chọn"></option>
-                    <option th:each="rentType:${rentTypeList} " th:text="${rentType.name}"
-                            th:value="${rentType.name}"></option>
-                </select>
-                <select name="searchFacilityType">
-                    <option value="" th:text="Chọn"></option>
-                    <option th:each="facilityType:${facilityTypeList} " th:text="${facilityType.name}"
-                            th:value="${facilityType.name}"></option>
-                </select>
-                <button class="btn btn-success btn-sm " type="submit">Search</button>
-            </form>
+            <div class="row my-3">
+                <div class="col-4 ">
+                    <!-- Button trigger modal thêm mới-->
+                    <button id="btnCreate" type="button" class="btn btn-primary btn-sm d-flex justify-content-center"
+                            data-bs-toggle="modal"
+                            data-bs-target="#createNew">
+                        <span class="fa-solid fa-person-circle-plus text-light h4 my-auto me-2"></span> Thêm mới
+                    </button>
+                </div>
+                <div class="col-8 ">
+                    <form action="/facility" method="get" class="d-flex justify-content-center">
+                        <input class="form-control me-2" type="search" name="searchName" th:value="${searchName}"
+                               placeholder="nhập tên dịch vụ">
+                        <select class="form-select me-2" name="searchRentType">
+                            <option value="" th:text="Chọn"></option>
+                            <option th:each="rentType:${rentTypeList} " th:text="${rentType.name}"
+                                    th:value="${rentType.name}"></option>
+                        </select>
+                        <select class="form-select me-2" name="searchFacilityType">
+                            <option value="" th:text="Chọn"></option>
+                            <option th:each="facilityType:${facilityTypeList} " th:text="${facilityType.name}"
+                                    th:value="${facilityType.name}"></option>
+                        </select>
+                        <button class="btn btn-outline-info" type="submit" style="color: #1d2124">Search</button>
+
+                    </form>
+                </div>
+            </div>
+
 
             <input hidden type="text" id="success" th:value="${msg}">
 
             <!--Hiển thị danh sách facility-->
+            <div class="row">
+                <table class="table table-striped table-bordered">
+                    <thead class="text-center bg-info">
+                    <tr>
+                        <th class="text-center">STT</th>
+                        <th>Tên dịch vụ</th>
+                        <th>Diện tích (m<sup>2</sup>)</th>
+                        <th>Chi phí thuê</th>
+                        <th>Số người tối đa</th>
+                        <th>Kiểu thuê</th>
+                        <th>Loại dịch vụ</th>
+                        <th class="text-center">Mô tả</th>
+                        <th class="text-center">Sửa</th>
+                        <th class="text-center">Xóa</th>
+                    </tr>
+                    </thead>
 
 
-            <table class="table table-striped table-bordered">
-                <thead class="text-center bg-info">
-                <tr>
-                    <th class="text-center">STT</th>
-                    <th>Tên dịch vụ</th>
-                    <th>Diện tích (m<sup>2</sup>)</th>
-                    <th>Chi phí thuê</th>
-                    <th>Số người tối đa</th>
-                    <th>Kiểu thuê</th>
-                    <th>Loại dịch vụ</th>
-                    <th class="text-center">Mô tả</th>
-                    <th class="text-center">Sửa</th>
-                    <th class="text-center">Xóa</th>
-                </tr>
-                </thead>
+                    <tr th:each="facility, status : ${facilityList}">
+                        <td class="text-center" th:text="${status.count + facilityList.number * 5}"></td>
 
+                        <td>
+                            <a th:href="@{'/facility/view/{id}'(id=${facility.id})}"
+                               th:text="${facility.name}">
 
-                <tr th:each="facility, status : ${facilityList}">
-                    <td class="text-center" th:text="${status.count + facilityList.number * 5}"></td>
+                            </a>
+                            <button hidden id="info" data-bs-toggle="modal" data-bs-target="#infoFacility">info</button>
+                        </td>
 
-                    <td>
-                        <a th:href="@{'/facility/view/{id}'(id=${facility.id})}"
-                           th:text="${facility.name}">
+                        <td th:text="${facility.leasedArea}"></td>
 
-                        </a>
-                        <button id="info" data-bs-toggle="modal" data-bs-target="#infoFacility">info</button>
-                    </td>
+                        <td th:text="${'₫ ' + facility.rentalCosts}"></td>
 
-                    <td th:text="${facility.leasedArea}"></td>
+                        <td th:text="${facility.maxPerson}"></td>
 
-                    <td th:text="${'₫ ' + facility.rentalCosts}"></td>
+                        <td th:text="${facility.rentType}"></td>
 
-                    <td th:text="${facility.maxPerson}"></td>
+                        <td th:text="${facility.facilityType}"></td>
+                        <td th:text="${facility.description}"></td>
+                        <td class="text-center">
+                            <a th:href="@{'/facility/update/{id}'(id=${facility.id})}">
+                                <span class="fa-solid fa-user-pen text-primary h4 m-auto"></span>
+                            </a>
+                        </td>
 
-                    <td th:text="${facility.rentType}"></td>
+                        <td class="text-center">
+                            <a href="#" data-bs-toggle="modal"
+                               data-bs-target="#deleteModal"
+                               th:attr="onclick=|deleteFacility('${facility.id}', '${facility.name}')|">
+                                <span class="fa-solid fa-person-circle-minus text-danger h4 m-auto"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row float-end">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:href="@{'/facility'(page=${0}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                               th:if="${facilityList.hasPrevious()}">&laquo;&laquo;</a>
+                        </li>
+                        <li class="page-item disabled" th:unless="${facilityList.hasPrevious()}">
+                            <a class="page-link">&laquo;&laquo;</a>
+                        </li>
 
-                    <td th:text="${facility.facilityType}"></td>
-                    <td th:text="${facility.description}"></td>
-                    <td class="text-center">
-                        <a th:href="@{'/facility/update/{id}'(id=${facility.id})}">
-                            <span class="fa-solid fa-user-pen text-primary h4 m-auto"></span>
-                        </a>
-                    </td>
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:href="@{'/facility'(page=${facilityList.number - 1}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                               th:if="${facilityList.hasPrevious()}">&laquo;</a>
+                        </li>
+                        <li class="page-item disabled" th:unless="${facilityList.hasPrevious()}">
+                            <a class="page-link">&laquo;</a>
+                        </li>
 
-                    <td class="text-center">
-                        <a href="#" data-bs-toggle="modal"
-                           data-bs-target="#deleteModal"
-                           th:attr="onclick=|deleteFacility('${facility.id}', '${facility.name}')|">
-                            <span class="fa-solid fa-person-circle-minus text-danger h4 m-auto"></span>
-                        </a>
-                    </td>
-                </tr>
-            </table>
-
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link"
-                           th:href="@{'/facility'(page=${0}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
-                           th:if="${facilityList.hasPrevious()}">&laquo;&laquo;</a>
-                    </li>
-                    <li class="page-item disabled" th:unless="${facilityList.hasPrevious()}">
-                        <a class="page-link">&laquo;&laquo;</a>
-                    </li>
-
-                    <li class="page-item">
-                        <a class="page-link"
-                           th:href="@{'/facility'(page=${facilityList.number - 1}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
-                           th:if="${facilityList.hasPrevious()}">&laquo;</a>
-                    </li>
-                    <li class="page-item disabled" th:unless="${facilityList.hasPrevious()}">
-                        <a class="page-link">&laquo;</a>
-                    </li>
-
-                    <li class="page-item"><a class="page-link" th:href="@{'/facility'(page=${facilityList.number - 1},
+                        <li class="page-item"><a class="page-link" th:href="@{'/facility'(page=${facilityList.number - 1},
             searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
-                                             th:if="${facilityList.hasPrevious()}" th:text="${facilityList.number}"></a>
-                    </li>
+                                                 th:if="${facilityList.hasPrevious()}"
+                                                 th:text="${facilityList.number}"></a>
+                        </li>
 
-                    <li class="page-item active">
-                        <a class="page-link"
-                           th:href="@{'/facility'(page=${facilityList.number}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
-                           th:text="${facilityList.number + 1}"><span class="sr-only">(trang hiện tại)</span></a>
-                    </li>
+                        <li class="page-item active">
+                            <a class="page-link"
+                               th:href="@{'/facility'(page=${facilityList.number}, searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                               th:text="${facilityList.number + 1}"><span class="sr-only">(trang hiện tại)</span></a>
+                        </li>
 
-                    <li class="page-item"><a class="page-link" th:href="@{'/facility'(page=${facilityList.number + 1},
+                        <li class="page-item"><a class="page-link" th:href="@{'/facility'(page=${facilityList.number + 1},
             searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
-                                             th:if="${facilityList.hasNext()}" th:text="${facilityList.number + 2}"></a>
-                    </li>
+                                                 th:if="${facilityList.hasNext()}"
+                                                 th:text="${facilityList.number + 2}"></a>
+                        </li>
 
-                    <li class="page-item">
-                        <a class="page-link"
-                           th:href="@{'/facility'(page=${facilityList.number + 1},searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
-                           th:if="${facilityList.hasNext()}">&raquo;</a>
-                    </li>
-                    <li class="page-item disabled" th:unless="${facilityList.hasNext()}">
-                        <a class="page-link">&raquo;</a>
-                    </li>
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:href="@{'/facility'(page=${facilityList.number + 1},searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                               th:if="${facilityList.hasNext()}">&raquo;</a>
+                        </li>
+                        <li class="page-item disabled" th:unless="${facilityList.hasNext()}">
+                            <a class="page-link">&raquo;</a>
+                        </li>
 
-                    <li class="page-item">
-                        <a class="page-link"
-                           th:href="@{'/facility'(page=${facilityList.totalPages - 1},searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
-                           th:if="${facilityList.hasNext()}">&raquo;&raquo;</a>
-                    </li>
-                    <li class="page-item disabled" th:unless="${facilityList.hasNext()}">
-                        <a class="page-link">&raquo;&raquo;</a>
-                    </li>
-                </ul>
-            </nav>
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:href="@{'/facility'(page=${facilityList.totalPages - 1},searchName=${searchName},searchRentType=${searchRentType},searchFacilityType=${searchFacilityType})}"
+                               th:if="${facilityList.hasNext()}">&raquo;&raquo;</a>
+                        </li>
+                        <li class="page-item disabled" th:unless="${facilityList.hasNext()}">
+                            <a class="page-link">&raquo;&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
 
         </div>
     </div>
@@ -167,13 +186,134 @@
 </div>
 
 
-<!-- Button trigger modal thêm mới-->
-<button id="btnCreate" type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal"
-        data-bs-target="#createNew">
-    <span class="fa-solid fa-person-circle-plus text-light h5 my-auto me-1"></span> Thêm mới nhân
-    viên
-</button>
-<!-- Modal thêm mới facility-->
+<!--Modal hiển thị thông tin chi tiết facility-->
+<div class="modal" style="margin-top: 1%" id="infoFacility" tabindex="-1" aria-labelledby="infoFacilityLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoCustomerLabel" style="color: black">Thông Tin Cơ sở dịch vụ : <span
+                        style="color: rebeccapurple" id="nameFacilityInfo" th:text="${facility.name}"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="facilityTableModal" border="1" class="table table-striped">
+
+                    <tr>
+                        <td>Diện tích:</td>
+                        <td><span id="areaFacilityInfo"
+                                  th:text="${facility.leasedArea}"></span><span> m<sup>2</sup></span></td>
+                    </tr>
+                    <tr>
+                        <td>Phí thuê:</td>
+                        <td><span id="costFacilityInfo" th:text="${facility.rentalCosts}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Số người tối đa:</td>
+                        <td><span id="maxPeopleFacilityInfo" th:text="${facility.maxPerson}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Kiểu thuê:</td>
+                        <td><span id="rentTypeFacilityInfo" th:if="${facility.rentType}"
+                                  th:text="${facility.rentType.name}"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Kiểu dịch vụ:</td>
+                        <td>
+                            <span id="facilityTypeInfo" th:if="${facility.facilityType}"
+                                  th:text="${facility.facilityType.name}">
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>Tiêu chuẩn phòng:</td>
+                        <td><span id="standardRoomFacilityInfo" th:text="${facility.room}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Mô tả khác:</td>
+                        <td><span id="descriptionFacilityInfo" th:text="${facility.description }"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Diện tích hồ bơi:</td>
+                        <td><span id="poolAreaFacilityInfo" th:text="${facility.areaPool}"></span>
+                            <span> m<sup>2</sup></span></td>
+                    </tr>
+                    <tr>
+                        <td>Số tầng:</td>
+                        <td><span id="numberOfFloorsFacilityInfo" th:text="${facility.floor}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Dịch vụ miễn phí:</td>
+                        <td><span id="freeFacilityInfo" th:text="${facility.free}"></span></td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<input hidden id="action" th:value="${action}">
+
+
+<script>
+    function changeForm(type) {
+        let selectType = type.value;
+        switch (selectType) {
+            case "1":
+                document.getElementById("standardRoomForm").style.display = "block";
+                // document.getElementById("descriptionForm").style.display = "block";
+                document.getElementById("poolAreaForm").style.display = "block";
+                document.getElementById("numberOfFloorsForm").style.display = "block";
+                document.getElementById("facilityFreeForm").style.display = "none";
+                break;
+            case "2":
+                document.getElementById("standardRoomForm").style.display = "block";
+                // document.getElementById("descriptionForm").style.display = "block";
+                document.getElementById("poolAreaForm").style.display = "none";
+                document.getElementById("numberOfFloorsForm").style.display = "block";
+                document.getElementById("facilityFreeForm").style.display = "none";
+                break;
+            case "3":
+                document.getElementById("standardRoomForm").style.display = "none";
+                // document.getElementById("descriptionForm").style.display = "none";
+                document.getElementById("poolAreaForm").style.display = "none";
+                document.getElementById("numberOfFloorsForm").style.display = "none";
+                document.getElementById("facilityFreeForm").style.display = "block";
+                break
+            default:
+                document.getElementById("standardRoomForm").style.display = "none";
+                // document.getElementById("descriptionForm").style.display = "none";
+                document.getElementById("poolAreaForm").style.display = "none";
+                document.getElementById("numberOfFloorsForm").style.display = "none";
+                document.getElementById("facilityFreeForm").style.display = "none";
+        }
+    }
+
+    function deleteFacility(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+
+    $(document).ready(function () {
+        let action = $("#action").val();
+        if (action === "openInfo") {
+            $("#info").click();
+        } else if (action === "openUpdate") {
+            $("#btnUpdate").click();
+        }
+        if (action === "openMsg") {
+            $("#modalSuccess").click();
+        }
+    });
+
+</script>
+
+<!-- Modal thêm mới facility  xong-->
 <div class="modal fade" id="createNew" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="createBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -188,10 +328,10 @@
                 <div class="d-flex justify-content-center">
                     <form class="w-50 border border-2 border-success p-3 rounded formCSS"
                           th:action="@{/facility/create}"
-                          th:object="${newFacilityDto}" method="POST">
+                          th:object="${facilityDto}" method="POST">
                         <div class="form-group">
                             <label class="h6" for="facilityType">Loại dịch vụ:</label>
-<!--                            <p style="color: red" th:if="${#fields.hasErrors('facilityType.id')}" th:errors="*{facilityType.id}"></p>-->
+                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('facilityType.id')}" th:errors="*{facilityType.id}"></p>-->
                             <div class="input-group">
                                 <select id="facilityType" class="form-select" th:field="*{facilityType.id}"
                                         onchange="changeForm(this)">
@@ -242,7 +382,7 @@
 
                         <div class="mt-3 form-group">
                             <label for="maxPerson" class="h6">Số người tối đa:</label>
-<!--                            <p style="color: red" th:if="${#fields.hasErrors('maxPerson')}"   th:errors="*{maxPerson}"></p>-->
+                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('maxPerson')}"   th:errors="*{maxPerson}"></p>-->
                             <div class="input-group">
                                 <input type="number" id="maxPerson" class="form-control"
                                        placeholder="Nhập số người tối đa.."
@@ -254,7 +394,7 @@
 
                         <div class="mt-3 form-group" id="standardRoomForm" style="display: none">
                             <label for="room" class="h6">Tiêu chuẩn phòng:</label>
-<!--                            <p style="color: red" th:if="${#fields.hasErrors('room')}" th:errors="*{room}"></p>-->
+                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('room')}" th:errors="*{room}"></p>-->
                             <div class="input-group">
                                 <input type="text" id="room" class="form-control" placeholder="Nhập tiêu chuẩn phòng.."
                                        th:field="*{room}"/>
@@ -262,9 +402,9 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 form-group" id="descriptionForm" style="display: none">
+                        <div class="mt-3 form-group" id="descriptionForm">
                             <label for="descriptionFacility" class="h6">Mô tả tiện nghi khác:</label>
-<!--                            <p style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>-->
+                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>-->
                             <div class="input-group">
                                 <input type="text" id="descriptionFacility" class="form-control"
                                        placeholder="Nhập mô tả tiện nghi khác.."
@@ -275,7 +415,7 @@
 
                         <div class="mt-3 form-group" id="poolAreaForm" style="display: none">
                             <label for="areaPool" class="h6">Diện tích hồ bơi (m<sup>2</sup>):</label>
-<!--                            <p style="color: red" th:if="${#fields.hasErrors('areaPool')}" th:errors="*{areaPool}"></p>-->
+                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('areaPool')}" th:errors="*{areaPool}"></p>-->
                             <div class="input-group">
                                 <input type="number" id="areaPool" class="form-control"
                                        placeholder="Nhập diện tích hồ bơi.."
@@ -286,7 +426,7 @@
 
                         <div class="mt-3 form-group" id="numberOfFloorsForm" style="display: none">
                             <label for="floor" class="h6">Số tầng:</label>
-<!--                            <p style="color: red" th:if="${#fields.hasErrors('floor')}" th:errors="*{floor}"></p>-->
+                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('floor')}" th:errors="*{floor}"></p>-->
                             <div class="input-group">
                                 <input type="number" id="floor" class="form-control" placeholder="Nhập số tầng.."
                                        th:field="*{floor}"/>
@@ -296,7 +436,7 @@
 
                         <div class="mt-3 form-group" id="facilityFreeForm" style="display: none">
                             <label for="free" class="h6">Dịch vụ miễn phí đi kèm:</label>
-<!--                            <p style="color: red" th:if="${#fields.hasErrors('free')}" th:errors="*{free}"></p>-->
+                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('free')}" th:errors="*{free}"></p>-->
                             <div class="input-group">
                                 <input type="text" id="free" class="form-control"
                                        placeholder="Nhập dịch vụ miễn phí đi kèm.." th:field="*{free}"/>
@@ -334,128 +474,9 @@
 </div>
 
 
-<!--Modal hiển thị thông tin chi tiết facility-->
-<div class="modal" style="margin-top: 1%" id="infoFacility" tabindex="-1" aria-labelledby="infoFacilityLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="infoCustomerLabel" style="color: #4267b2">Thông Tin Cơ sở dịch vụ : <span
-                        style="color: rebeccapurple" id="nameFacilityInfo"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table id="facilityTableModal" border="1" class="table table-striped">
-
-                    <tr>
-                        <td>Diện tích:</td>
-                        <td><span id="areaFacilityInfo"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Phí thuê:</td>
-                        <td><span id="costFacilityInfo"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Số người tối đa:</td>
-                        <td><span id="maxPeopleFacilityInfo"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Kiểu thuê:</td>
-                        <td><span id="rentTypeFacilityInfo"></span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Kiểu dịch vụ:</td>
-                        <td><span id="facilityTypeInfo"></span></td>
-                    </tr>
-                    <tr>
-
-                        <td>Tiêu chuẩn phòng:</td>
-                        <td><span id="standardRoomFacilityInfo"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Mô tả khác:</td>
-                        <td><span id="descriptionFacilityInfo"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Diện tích hồ bơi:</td>
-                        <td><span id="poolAreaFacilityInfo"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Số tầng:</td>
-                        <td><span id="numberOfFloorsFacilityInfo"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Dịch vụ miễn phí:</td>
-                        <td><span id="freeFacilityInfo"></span></td>
-                    </tr>
-                </table>
-
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-<input id="action" th:value="${action}">
-
-
-<script>
-    function changeForm(type) {
-        let selectType = type.value;
-        switch (selectType) {
-            case "1":
-                document.getElementById("standardRoomForm").style.display = "block";
-                document.getElementById("descriptionForm").style.display = "block";
-                document.getElementById("poolAreaForm").style.display = "block";
-                document.getElementById("numberOfFloorsForm").style.display = "block";
-                document.getElementById("facilityFreeForm").style.display = "none";
-                break;
-            case "2":
-                document.getElementById("standardRoomForm").style.display = "block";
-                document.getElementById("descriptionForm").style.display = "block";
-                document.getElementById("poolAreaForm").style.display = "none";
-                document.getElementById("numberOfFloorsForm").style.display = "block";
-                document.getElementById("facilityFreeForm").style.display = "none";
-                break;
-            case "3":
-                document.getElementById("standardRoomForm").style.display = "none";
-                document.getElementById("descriptionForm").style.display = "none";
-                document.getElementById("poolAreaForm").style.display = "none";
-                document.getElementById("numberOfFloorsForm").style.display = "none";
-                document.getElementById("facilityFreeForm").style.display = "block";
-                break
-            default:
-                document.getElementById("standardRoomForm").style.display = "none";
-                document.getElementById("descriptionForm").style.display = "none";
-                document.getElementById("poolAreaForm").style.display = "none";
-                document.getElementById("numberOfFloorsForm").style.display = "none";
-                document.getElementById("facilityFreeForm").style.display = "none";
-        }
-    }
-
-    function deleteFacility(id, name) {
-        document.getElementById("idDelete").value = id;
-        document.getElementById("nameDelete").innerText = name;
-    }
-
-    $(document).ready(function () {
-        let action = $("#action").val();
-        if (action === "openInfo") {
-            $("#info").click();
-        } else if (action === "openUpdate") {
-            $("#btnUpdate").click();
-        }
-        if (action === "openMsg") {
-            $("#modalSuccess").click();
-        }
-    });
-
-</script>
 <!-- Button trigger modal cập nhật facility-->
 <!--xong-->
-<button id="btnUpdate" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
+<button id="btnUpdate" hidden type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
     Update
 </button>
 
@@ -471,8 +492,8 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
                     <form class="w-50 border border-2 border-success p-3 rounded formCSS"
-                          th:action="@{'/facility/update/{id}'(id=${updateFacilityDto.id})}"
-                          th:object="${updateFacilityDto}" method="POST">
+                          th:action="@{'/facility/update/{id}'(id=${facilityDto.id})}"
+                          th:object="${facilityDto}" method="POST">
                         <input type="hidden" th:field="*{id}" readonly/>
 
                         <input type="hidden" th:field="*{facilityType.id}" readonly/>
@@ -480,14 +501,14 @@
                             <label class="h6">Loại dịch vụ:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control"
-                                       th:value="${updateFacilityDto.facilityType.name}" readonly/>
+                                       th:value="${facilityDto.facilityType.name}" readonly/>
                                 <span class="input-group-text"><i class="fa-solid fa-house-user"></i></span>
                             </div>
                         </div>
 
                         <div class="mt-3 form-group">
                             <label for="name" class="h6">Tên dịch vụ:</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                             <div class="input-group">
                                 <input type="text" id="name" class="form-control" placeholder="Nhập tên dịch vụ.."
                                        th:field="*{name}" required
@@ -499,7 +520,8 @@
 
                         <div class="mt-3 form-group">
                             <label for="area" class="h6">Diện tích sử dụng (m<sup>2</sup>):</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('leasedArea')}" th:errors="*{leasedArea}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('leasedArea')}"
+                               th:errors="*{leasedArea}"></p>
                             <div class="input-group">
                                 <input type="number" id="area" class="form-control"
                                        placeholder="Nhập diện tích sử dụng.."
@@ -511,7 +533,8 @@
 
                         <div class="mt-3 form-group">
                             <label for="cost" class="h6">Chi phí thuê (VNĐ):</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('rentCost')}" th:errors="*{rentalCosts}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('rentalCosts')}"
+                               th:errors="*{rentalCosts}"></p>
                             <div class="input-group">
                                 <input type="number" id="cost" class="form-control" placeholder="Nhập chi phí thuê.."
                                        th:field="*{rentalCosts}" required pattern="^[1-9]\d*$"
@@ -522,7 +545,8 @@
 
                         <div class="mt-3 form-group">
                             <label for="maxPeople" class="h6">Số người tối đa:</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('maxPerson')}" th:errors="*{maxPerson}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('maxPerson')}"
+                               th:errors="*{maxPerson}"></p>
                             <div class="input-group">
                                 <input type="number" id="maxPeople" class="form-control"
                                        placeholder="Nhập số người tối đa.."
@@ -532,9 +556,9 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 form-group" th:if="${updateFacilityDto.facilityType.id != 3}">
+                        <div class="mt-3 form-group" th:if="${facilityDto.facilityType.id != 3}">
                             <label for="standardRoom" class="h6">Tiêu chuẩn phòng:</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('room')}" th:errors="*{room}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('room')}" th:errors="*{room}"></p>
                             <div class="input-group">
                                 <input type="text" id="standardRoom" class="form-control"
                                        placeholder="Nhập tiêu chuẩn phòng.."
@@ -542,13 +566,13 @@
                                 <span class="input-group-text"><i class="fa-solid fa-star"></i></span>
                             </div>
                         </div>
-                        <input type="hidden" th:if="${updateFacilityDto.facilityType.id == 3}" th:field="*{room}"
+                        <input type="hidden" th:if="${facilityDto.facilityType.id == 3}" th:field="*{room}"
                                th:value="${''}"/>
 
                         <div class="mt-3 form-group">
                             <label for="description" class="h6">Mô tả tiện nghi khác:</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('description')}"-->
-                            <!--                               th:errors="*{description}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('description')}"
+                               th:errors="*{description}"></p>
                             <div class="input-group">
                                 <input type="text" id="description" class="form-control"
                                        placeholder="Nhập mô tả tiện nghi khác.."
@@ -558,9 +582,9 @@
                         </div>
 
 
-                        <div class="mt-3 form-group" th:if="${updateFacilityDto.facilityType.id == 1}">
+                        <div class="mt-3 form-group" th:if="${facilityDto.facilityType.id == 1}">
                             <label for="poolArea" class="h6">Diện tích hồ bơi (m<sup>2</sup>):</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('areaPool')}" th:errors="*{areaPool}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('areaPool')}" th:errors="*{areaPool}"></p>
                             <div class="input-group">
                                 <input type="number" id="poolArea" class="form-control"
                                        placeholder="Nhập diện tích hồ bơi.."
@@ -568,12 +592,12 @@
                                 <span class="input-group-text"><i class="fa-solid fa-person-swimming"></i></span>
                             </div>
                         </div>
-                        <input type="hidden" th:if="${updateFacilityDto.facilityType.id != 1}" th:field="*{areaPool}"
+                        <input type="hidden" th:if="${facilityDto.facilityType.id != 1}" th:field="*{areaPool}"
                                th:value="${''}"/>
 
-                        <div class="mt-3 form-group" th:if="${updateFacilityDto.facilityType.id != 3}">
+                        <div class="mt-3 form-group" th:if="${facilityDto.facilityType.id != 3}">
                             <label for="numberOfFloors" class="h6">Số tầng:</label>
-                            <!--                            <p style="color: red" th:if="${#fields.hasErrors('floor')}" th:errors="*{floor}"></p>-->
+                            <p style="color: red" th:if="${#fields.hasErrors('floor')}" th:errors="*{floor}"></p>
                             <div class="input-group">
                                 <input type="number" id="numberOfFloors" class="form-control"
                                        placeholder="Nhập số tầng.."
@@ -581,10 +605,10 @@
                                 <span class="input-group-text"><i class="fa-solid fa-building"></i></span>
                             </div>
                         </div>
-                        <input type="hidden" th:if="${updateFacilityDto.facilityType.id == 3}" th:field="*{floor}"
+                        <input type="hidden" th:if="${facilityDto.facilityType.id == 3}" th:field="*{floor}"
                                th:value="${''}"/>
 
-                        <div class="mt-3 form-group" th:if="${updateFacilityDto.facilityType.id == 3}">
+                        <div class="mt-3 form-group" th:if="${facilityDto.facilityType.id == 3}">
                             <label for="facilityFree" class="h6">Dịch vụ miễn phí đi kèm:</label>
                             <p style="color: red" th:if="${#fields.hasErrors('free')}" th:errors="*{free}"></p>
                             <div class="input-group">
@@ -593,7 +617,7 @@
                                 <span class="input-group-text"><i class="fa-solid fa-gift"></i></span>
                             </div>
                         </div>
-                        <input type="hidden" th:if="${updateFacilityDto.facilityType.id != 3}" th:field="*{free}"
+                        <input type="hidden" th:if="${facilityDto.facilityType.id != 3}" th:field="*{free}"
                                th:value="${''}"/>
 
                         <div class="mt-3 form-group">

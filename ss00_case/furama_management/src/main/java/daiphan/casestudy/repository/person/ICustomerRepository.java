@@ -49,4 +49,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
             " where customer.is_delete = 0", nativeQuery = true)
     List<ICustomerDto> findAllDto();
 
+    @Query(value = "select customer.name as name, birthday, address, customer.id as id," +
+            " customer_type.name as customerType, sex,id_citizen " +
+            "from customer " +
+            "join customer_type on customer_type.id = customer.customer_type_id" +
+            " where customer.is_delete = 0 and id_citizen like :idCitizen ",nativeQuery = true)
+    ICustomerDto findByIdCitizen(@Param("idCitizen") String idCitizen);
 }

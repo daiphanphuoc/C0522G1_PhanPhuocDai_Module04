@@ -1,4 +1,4 @@
-package daiphan.casestudy.dto.person;
+package daiphan.casestudy.dto.facility;
 
 import daiphan.casestudy.model.facility.FacilityType;
 import daiphan.casestudy.model.facility.RentType;

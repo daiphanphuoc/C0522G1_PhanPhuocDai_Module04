@@ -11,4 +11,6 @@ import java.util.List;
 public interface ICustomerService extends IFuramaService<Customer> {
     Page<ICustomerDto> find(String searchName, String searchAddress, String searchType, Pageable pageable);
     List<ICustomerDto> findAllDto();
+
+    ICustomerDto findByIdCitizen(String idCitizen);
 }

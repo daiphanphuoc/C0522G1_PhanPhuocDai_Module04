@@ -38,13 +38,11 @@ public class FacilityController {
                           @RequestParam(defaultValue = "") String searchName,
                           @RequestParam(defaultValue = "") String searchRentType,
                           @RequestParam(defaultValue = "") String searchFacilityType,
-                          Pageable pageable) {
+                          @PageableDefault(value = 3) Pageable pageable) {
+        model.addAttribute("facility",new FacilityDto());
         model.addAttribute("searchName", searchName);
         model.addAttribute("searchRentType", searchRentType);
         model.addAttribute("searchFacilityType", searchFacilityType);
-        model.addAttribute("newFacilityDto", new FacilityDto());
-        model.addAttribute("facility", new FacilityDto());
-        model.addAttribute("updateFacilityDto", new FacilityDto());
         model.addAttribute("rentTypeList", rentTypeService.findAll());
         model.addAttribute("facilityTypeList", facilityTypeService.findAll());
         model.addAttribute("facilityList", facilityService.find(searchName, searchRentType, searchFacilityType, pageable));
@@ -56,8 +54,9 @@ public class FacilityController {
                                @RequestParam(defaultValue = "") String searchName,
                                @RequestParam(defaultValue = "") String searchRentType,
                                @RequestParam(defaultValue = "") String searchFacilityType,
-                               Pageable pageable) {
+                               @PageableDefault(value = 3) Pageable pageable) {
         useTotal(model, searchName, searchRentType, searchFacilityType, pageable);
+        model.addAttribute("facilityDto",new FacilityDto());
         return "facility/facility";
     }
 
@@ -66,13 +65,14 @@ public class FacilityController {
                            @RequestParam(defaultValue = "") String searchName,
                            @RequestParam(defaultValue = "") String searchRentType,
                            @RequestParam(defaultValue = "") String searchFacilityType,
-                           Pageable pageable) {
+                           @PageableDefault(value = 3) Pageable pageable) {
         useTotal(model, searchName, searchRentType, searchFacilityType, pageable);
 
         FacilityDto facilityDto = new FacilityDto();
         Facility facility = facilityService.findById(id);
         BeanUtils.copyProperties(facility, facilityDto);
         model.addAttribute("facility", facilityDto);
+        model.addAttribute("facilityDto", new FacilityDto());
 
         model.addAttribute("action", "openInfo");
         return "facility/facility";
@@ -83,25 +83,25 @@ public class FacilityController {
                                   @RequestParam(defaultValue = "") String searchName,
                                   @RequestParam(defaultValue = "") String searchRentType,
                                   @RequestParam(defaultValue = "") String searchFacilityType,
-                                  Pageable pageable) {
+                                  @PageableDefault(value = 3) Pageable pageable) {
         useTotal(model, searchName, searchRentType, searchFacilityType, pageable);
 
         FacilityDto facilityDto = new FacilityDto();
         Facility facility = facilityService.findById(id);
         if (facility != null) {
             BeanUtils.copyProperties(facility, facilityDto);
-            model.addAttribute("updateFacilityDto", facilityDto);
             model.addAttribute("action", "openUpdate");
         } else {
             model.addAttribute("action", "openFail");
             model.addAttribute("msg", "Cơ sở ko tồn tại");
         }
+        model.addAttribute("facilityDto", facilityDto);
         return "facility/facility";
     }
 
     @PostMapping("/update/{id}")
     public String updateByModal(@PathVariable int id,
-                                @ModelAttribute FacilityDto updateFacilityDto,
+                                @ModelAttribute FacilityDto facilityDto,
                                 Model model, BindingResult bindingResult,
                                 @RequestParam(defaultValue = "") String searchName,
                                 @RequestParam(defaultValue = "") String searchRentType,
@@ -115,10 +115,11 @@ public class FacilityController {
                 model.addAttribute("action", "openUpdate");
                 return "facility/facility";
             }
-            BeanUtils.copyProperties(updateFacilityDto, facility);
+            BeanUtils.copyProperties(facilityDto, facility);
             facilityService.update(facility);
             model.addAttribute("action", "openMsg");
             model.addAttribute("msg", "Cập nhật thành công");
+            model.addAttribute("facilityDto", new FacilityDto());
             return "facility/facility";
         }
         model.addAttribute("action", "openFail");
@@ -127,33 +128,31 @@ public class FacilityController {
     }
 
     @PostMapping("/create")
-    public String createByModal(@PathVariable int id,
-                                @ModelAttribute @Validated FacilityDto newFacilityDto,
+    public String createByModal(@ModelAttribute @Validated FacilityDto facilityDto,
                                 Model model, BindingResult bindingResult,
                                 @RequestParam(defaultValue = "") String searchName,
                                 @RequestParam(defaultValue = "") String searchRentType,
                                 @RequestParam(defaultValue = "") String searchFacilityType,
                                 @PageableDefault(value = 3) Pageable pageable) {
-
-
         useTotal(model, searchName, searchRentType, searchFacilityType, pageable);
-
-       /* if (bindingResult.hasFieldErrors()) {
+        if (bindingResult.hasFieldErrors()) {
             model.addAttribute("action", "openCreate");
             return "facility/facility";
-        }*/
+        }
         Facility facility;
-        if (newFacilityDto.getFacilityType().getId() == 1) {
+        if (facilityDto.getFacilityType().getId() == 1) {
             facility = new Villa();
-        } else if (newFacilityDto.getFacilityType().getId() == 2) {
+        } else if (facilityDto.getFacilityType().getId() == 2) {
             facility = new House();
         } else {
             facility = new Room();
         }
-        BeanUtils.copyProperties(newFacilityDto, facility);
+        BeanUtils.copyProperties(facilityDto, facility);
         facilityService.insert(facility);
         model.addAttribute("action", "openMsg");
         model.addAttribute("msg", "Thêm mới thành công");
+        model.addAttribute("facilityDto", new FacilityDto());
+
         return "facility/facility";
     }
 
@@ -181,10 +180,14 @@ public class FacilityController {
         model.addAttribute("rentTypeList", rentTypeService.findAll());
         return "facility/create";
     }
+
     @PostMapping("/add")
-    public String createNew(@ModelAttribute @Validated FacilityDto facilityDto, BindingResult bindingResult,
+    public String createNewByForm(@ModelAttribute @Validated FacilityDto facilityDto, BindingResult bindingResult,
                             RedirectAttributes redirectAttributes, Model model) {
 
+        if(bindingResult.hasFieldErrors()){
+            return  "facility/create";
+        }
 
         Facility facility;
         if (facilityDto.getFacilityType().getId() == 1) {
@@ -199,7 +202,7 @@ public class FacilityController {
         model.addAttribute("action", "openMsg");
         model.addAttribute("msg", "Thêm mới thành công");
 
-        redirectAttributes.addFlashAttribute("message", "Thêm mới nhân viên thành công!");
+        redirectAttributes.addFlashAttribute("message", "Thêm mới  thành công!");
         return "redirect:/facility";
 
 

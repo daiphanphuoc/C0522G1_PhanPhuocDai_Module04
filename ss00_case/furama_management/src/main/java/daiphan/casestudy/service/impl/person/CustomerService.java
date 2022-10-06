@@ -51,4 +51,7 @@ public class CustomerService implements ICustomerService {
     public List<ICustomerDto> findAllDto() {
         return customerRepository.findAllDto();
     }
+    public ICustomerDto findByIdCitizen(String idCitizen){
+        return customerRepository.findByIdCitizen(idCitizen);
+    }
 }

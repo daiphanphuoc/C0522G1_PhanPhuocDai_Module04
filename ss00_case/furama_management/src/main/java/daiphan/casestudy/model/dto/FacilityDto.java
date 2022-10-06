@@ -2,18 +2,32 @@ package daiphan.casestudy.model.dto;
 
 import daiphan.casestudy.model.facility.FacilityType;
 import daiphan.casestudy.model.facility.RentType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 
-
-public class FacilityDto {
+public class FacilityDto implements Validator {
     private int id;
+    @NotBlank
+    @Pattern(regexp = "^(([\\p{Lu}\\d][\\p{Ll}\\d]{1,8})(\\s([\\p{Lu}\\d]|[\\p{Lu}\\d][\\p{Ll}\\d]{1,10})){0,5})| *$",
+            message = "Tên dịch vụ các kí tự đầu tiên của mỗi từ phải viết hoa.")
     private String name;
+    @Min(20)
     private double leasedArea;
+    @Min(200000)
     private double rentalCosts;
+    @Min(2)
+    @Max(19)
     private int maxPerson;
     private boolean isDelete;
     private RentType rentType;
     private FacilityType facilityType;
+    @NotBlank
     private String description;
     private String room;
     private int floor;
@@ -141,5 +155,16 @@ public class FacilityDto {
 
     public void setFree(String free) {
         this.free = free;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        FacilityDto facilityDto = (FacilityDto) target;
+
     }
 }

@@ -1,6 +1,6 @@
 package daiphan.casestudy.model.dto;
 
-public class ContractDetailDTO {
+public class ContractDetailDto {
 
     private  int idContract;
     private  int idDetail;
@@ -11,10 +11,10 @@ public class ContractDetailDTO {
     private String unit;
     private String status;
 
-    public ContractDetailDTO() {
+    public ContractDetailDto() {
     }
 
-    public ContractDetailDTO(int idContract, int idDetail, int idAttach, String name,
+    public ContractDetailDto(int idContract, int idDetail, int idAttach, String name,
                              double cost, int quantity, String unit, String status) {
         this.idContract = idContract;
         this.idDetail = idDetail;

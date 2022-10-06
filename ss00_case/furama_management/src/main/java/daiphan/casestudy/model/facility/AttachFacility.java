@@ -20,6 +20,22 @@ public class AttachFacility {
     @OneToMany(mappedBy = "attachFacility" )
     private Set<ContractDetail> contractDetails;
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
+    public Set<ContractDetail> getContractDetails() {
+        return contractDetails;
+    }
+
+    public void setContractDetails(Set<ContractDetail> contractDetails) {
+        this.contractDetails = contractDetails;
+    }
+
     public AttachFacility() {
     }
 

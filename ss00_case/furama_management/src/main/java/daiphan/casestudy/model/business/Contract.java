@@ -115,6 +115,14 @@ public class Contract {
         this.facility = facility;
     }
 
+    public Set<ContractDetail> getContractDetails() {
+        return contractDetails;
+    }
+
+    public void setContractDetails(Set<ContractDetail> contractDetails) {
+        this.contractDetails = contractDetails;
+    }
+
     public boolean isDelete() {
         return isDelete;
     }

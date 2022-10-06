@@ -38,11 +38,8 @@ public class CustomerController {
                                 @RequestParam(defaultValue = "") String searchAddress,
                                 @RequestParam(defaultValue = "") String searchType,
                                 Model model,
-                                @PageableDefault(value = 3/*, sort = "customer.name",
-                                        direction = Sort.Direction.DESC*/) Pageable pageable) {
+                                @PageableDefault(value = 3) Pageable pageable) {
         model.addAttribute("customerDto", new CustomerDto());
-        model.addAttribute("customerDtoUpdate", new CustomerDto());
-
         useTotal(searchName,searchAddress,searchType,model,pageable);
         return "customer/customer";
     }
@@ -61,28 +58,14 @@ public class CustomerController {
     @PostMapping("/create")
     public String createNew(@ModelAttribute @Validated CustomerDto customerDto, BindingResult bindingResult,
                             RedirectAttributes redirectAttributes, Model model) {
-        new CustomerDto().validate(customerDto, bindingResult);
+        //new CustomerDto().validate(customerDto, bindingResult);
 
-        boolean isDuplicateIdCard = false;
-        for (ICustomerDto customer : customerService.findAllDto()) {
-            if (customerDto.getIdCitizen().equals(customer.getIdCitizen())) {
-                isDuplicateIdCard = true;
-                break;
-            }
-        }
-
+        ICustomerDto  iCustomerDto = customerService.findByIdCitizen(customerDto.getIdCitizen());
+        boolean isDuplicateIdCard =(iCustomerDto!=null);
         if (bindingResult.hasFieldErrors() || isDuplicateIdCard) {
-            model.addAttribute("customerTypeList", customerTypeService.findAll());
-
             if (isDuplicateIdCard) {
                 model.addAttribute("duplicateIdCitizen", "Số CMND/CCCD đã tồn tại, vui lòng kiểm tra lại.");
             }
-
-            LocalDate minAge = LocalDate.now().minusYears(80);
-            LocalDate maxAge = LocalDate.now().minusYears(18);
-            model.addAttribute("minAge", minAge);
-            model.addAttribute("maxAge", maxAge);
-
             return "customer/create";
         }
 
@@ -108,22 +91,12 @@ public class CustomerController {
                                    @RequestParam(defaultValue = "") String searchAddress,
                                    @RequestParam(defaultValue = "") String searchType,
                                    Model model,
-                                   @PageableDefault(value = 3/*, sort = "customer.name",
-                                        direction = Sort.Direction.DESC*/) Pageable pageable) {
-        model.addAttribute("customerDtoUpdate", new CustomerDto());
-        new CustomerDto().validate(customerDto, bindingResult);
-
-        boolean isDuplicateIdCard = false;
-        for (ICustomerDto customer : customerService.findAllDto()) {
-            if (customerDto.getIdCitizen().equals(customer.getIdCitizen())) {
-                isDuplicateIdCard = true;
-                break;
-            }
-        }
+                                   @PageableDefault(value = 3) Pageable pageable) {
+       // new CustomerDto().validate(customerDto, bindingResult);
+        ICustomerDto  iCustomerDto = customerService.findByIdCitizen(customerDto.getIdCitizen());
+        boolean isDuplicateIdCard =(iCustomerDto!=null);
         useTotal(searchName,searchAddress,searchType,model,pageable);
         if (bindingResult.hasFieldErrors() || isDuplicateIdCard) {
-            model.addAttribute("customerTypeList", customerTypeService.findAll());
-
             if (isDuplicateIdCard) {
                 model.addAttribute("duplicateIdCitizen", "Số CMND/CCCD đã tồn tại, vui lòng kiểm tra lại.");
             }
@@ -145,6 +118,7 @@ public class CustomerController {
         return "customer/customer";
 
     }
+
     @GetMapping("/delete")
     public String deleteByModal(@RequestParam int id, RedirectAttributes redirectAttributes){
         Customer customer =customerService.findById(id);
@@ -168,52 +142,44 @@ public class CustomerController {
                                 @RequestParam(defaultValue = "") String searchAddress,
                                 @RequestParam(defaultValue = "") String searchType,
                                 Model model,
-                                @PageableDefault(value = 3/*, sort = "customer.name",
-                                        direction = Sort.Direction.DESC*/) Pageable pageable) {
+                                @PageableDefault(value = 3) Pageable pageable) {
 
         CustomerDto customerDtoUpdate = new CustomerDto();
         Customer customer = customerService.findById(id);
         if (customer != null) {
             BeanUtils.copyProperties(customer, customerDtoUpdate);
             customerDtoUpdate.setCustomerType(customer.getId());
-
-            model.addAttribute("customerDtoUpdate", customerDtoUpdate);
-            model.addAttribute("customerDto", new CustomerDto());
+            model.addAttribute("customerDto", customerDtoUpdate);
 
             useTotal(searchName,searchAddress,searchType,model,pageable);
-
             model.addAttribute("action","openUpdate");
             return "customer/customer";
         }
         return "/layout";
     }
+
     @PostMapping("/update/{id}")
     public String updateByModal(@PathVariable int id,
-                                @ModelAttribute CustomerDto customerDtoUpdate,
+                                @ModelAttribute @Validated CustomerDto customerDto,
                                 @RequestParam(defaultValue = "") String searchName,
                                 @RequestParam(defaultValue = "") String searchAddress,
                                 @RequestParam(defaultValue = "") String searchType,
                                 Model model,BindingResult bindingResult,
-                                @PageableDefault(value = 3/*, sort = "customer.name",
-                                        direction = Sort.Direction.DESC*/) Pageable pageable) {
+                                @PageableDefault(value = 3) Pageable pageable) {
 
         Customer customer = customerService.findById(id);
         if (customer != null) {
-            new CustomerDto().validate(customerDtoUpdate, bindingResult);
-
-            boolean isDuplicateIdCard = false;
-            List<ICustomerDto> customerDtos =customerService.findAllDto();
-            for (ICustomerDto customerDto : customerDtos) {
-                if (customerDtoUpdate.getIdCitizen().equals(customerDto.getIdCitizen()) &&
-                        !customerDtoUpdate.getIdCitizen().equals(customer.getIdCitizen())) {
-                    isDuplicateIdCard = true;
-                    break;
+           // new CustomerDto().validate(customerDto, bindingResult);
+           //bắt lỗi trùng idCitizen
+            ICustomerDto iCustomerDto = customerService.findByIdCitizen(customerDto.getIdCitizen());
+            boolean isDuplicateIdCard =false;
+            if(iCustomerDto!=null) {
+                if (iCustomerDto.getId()!=customerDto.getId()){
+                    isDuplicateIdCard=true;
                 }
             }
             useTotal(searchName,searchAddress,searchType,model,pageable);
             if (bindingResult.hasFieldErrors() || isDuplicateIdCard) {
-                model.addAttribute("customerTypeList", customerTypeService.findAll());
-
                 if (isDuplicateIdCard) {
                     model.addAttribute("duplicateIdCitizen", "Số CMND/CCCD đã tồn tại, vui lòng kiểm tra lại.");
                 }
@@ -221,15 +187,13 @@ public class CustomerController {
                 return "customer/customer";
             }
 
-            BeanUtils.copyProperties( customerDtoUpdate,customer);
+            BeanUtils.copyProperties( customerDto,customer);
             CustomerType customerType =new CustomerType();
-            customerType.setId(customerDtoUpdate.getCustomerType());
+            customerType.setId(customerDto.getCustomerType());
             customer.setCustomerType(customerType);
             customerService.update(customer);
-            model.addAttribute("customerDtoUpdate", new CustomerDto());
-            model.addAttribute("customerDto", new CustomerDto());
-            useTotal(searchName,searchAddress,searchType,model,pageable);
 
+            model.addAttribute("customerDto", new CustomerDto());
             return "customer/customer";
         }
         return "/layout";
@@ -239,8 +203,7 @@ public class CustomerController {
                           @RequestParam(defaultValue = "") String searchAddress,
                           @RequestParam(defaultValue = "") String searchType,
                           Model model,
-                          @PageableDefault(value = 3/*, sort = "customer.name",
-                                        direction = Sort.Direction.DESC*/) Pageable pageable){
+                          @PageableDefault(value = 3) Pageable pageable){
         model.addAttribute("customerTypeList", customerTypeService.findAll());
         LocalDate minAge = LocalDate.now().minusYears(80);
         LocalDate maxAge = LocalDate.now().minusYears(18);

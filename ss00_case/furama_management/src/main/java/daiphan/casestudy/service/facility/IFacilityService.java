@@ -1,6 +1,6 @@
 package daiphan.casestudy.service.facility;
 
-import daiphan.casestudy.dto.person.IFacilityDto;
+import daiphan.casestudy.dto.facility.IFacilityDto;
 import daiphan.casestudy.model.facility.Facility;
 import daiphan.casestudy.service.IFuramaService;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,6 @@
 package daiphan.casestudy.service.impl.facility;
 
-import daiphan.casestudy.dto.person.IFacilityDto;
+import daiphan.casestudy.dto.facility.IFacilityDto;
 import daiphan.casestudy.model.facility.Facility;
 import daiphan.casestudy.repository.facility.IFacilityRepository;
 import daiphan.casestudy.service.facility.IFacilityService;
